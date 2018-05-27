@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.luis.edward.airlineapp">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +16,51 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Search"
+            android:label="@string/title_activity_search"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Advanced"
+            android:label="@string/title_activity_advanced"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FlightsList"
+            android:label="@string/title_activity_flights_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Classes"
+            android:label="@string/title_activity_classes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetalleClasses"
+            android:label="@string/title_activity_detalle_classes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetalleFlight"
+            android:label="@string/title_activity_detalle_flight"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CrearCuenta"
+            android:label="@string/title_activity_crear_cuenta"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UpdateAccount"
+            android:label="@string/title_activity_update_account"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyTrips"
+            android:label="@string/title_activity_my_trips"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
