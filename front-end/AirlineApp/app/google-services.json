@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "195558491159",
+    "firebase_url": "https://aerolinea-8a326.firebaseio.com",
+    "project_id": "aerolinea-8a326",
+    "storage_bucket": "aerolinea-8a326.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195558491159:android:75741e12fc92ab8d",
+        "android_client_info": {
+          "package_name": "com.luis.edward.airlineapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195558491159-r2df640p4bl17vgi6corgtav0cmlf15o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.luis.edward.airlineapp",
+            "certificate_hash": "4f4c37fe65025260eb2c9bfc3de63e645c41d24f"
+          }
+        },
+        {
+          "client_id": "195558491159-rr7vvil7qknjh68oaekibuhgs42pma97.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "195558491159-rr7vvil7qknjh68oaekibuhgs42pma97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe7VKmGAsYMwEBLwdP5OTzOq5-g73qocc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195558491159-rr7vvil7qknjh68oaekibuhgs42pma97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
