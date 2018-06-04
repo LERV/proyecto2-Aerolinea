@@ -1,15 +1,10 @@
 package com.luis.edward.airlineapp;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,9 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CalendarView;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,33 +29,19 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.util.Calendar;
-
-import static com.luis.edward.airlineapp.R.id.emailGoogle_user;
-import static com.luis.edward.airlineapp.R.id.imageViewGoogle_user;
-import static com.luis.edward.airlineapp.R.id.nameGoogle_user;
-
-
-public class Search extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, DatePickerDialog.OnDateSetListener {
+public class AmountPassagers extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
     private ImageView imageUser;
     private TextView nameUser;
     private TextView emailUser;
     private View navHeader;
-    private EditText departure_edit;
-    private EditText return_edit;
-    String currentDateString;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_amount_passagers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -90,39 +68,12 @@ public class Search extends AppCompatActivity
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
-
-        //-----------------------------------------------------
-        //-----------------PARA ESTABLECER LA FECHA DE PARTIDA---------------------
-        //---------------El de return lo puse invisible por mientras...
-        departure_edit = findViewById(R.id.editText_depart);
-        departure_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                android.support.v4.app.DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(getSupportFragmentManager(),"Date picker");
-            }
-        });
-
-        //------------------------------------------------------
     }
-
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR,year);
-        c.set(Calendar.MONTH,month);
-        c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        currentDateString = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
-        departure_edit.setText(currentDateString);
-    }
-
-
-
-
 
     @Override
     protected void onStart() {
         super.onStart();
+
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if(opr.isDone()){
             GoogleSignInResult result = opr.get();
@@ -136,6 +87,7 @@ public class Search extends AppCompatActivity
             });
         }
     }
+
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
@@ -148,12 +100,6 @@ public class Search extends AppCompatActivity
         }else{
             goLoginScreen();
         }
-    }
-
-    private void goLoginScreen() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 
     @Override
@@ -211,11 +157,6 @@ public class Search extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
     public void log_out(){
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
@@ -223,14 +164,20 @@ public class Search extends AppCompatActivity
                 if(status.isSuccess()){
                     goLoginScreen();
                 }else{
-                    Toast.makeText(Search.this,"Session could not be closed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AmountPassagers.this,"Session could not be closed",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void go_amountPassager_screen(View view){
-        Intent intent = new Intent(this, AmountPassagers.class);
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

@@ -40,4 +40,5 @@
     <string name="lable_nextStep">Continue</string>
     <string name="lable_step1">Step 1 : Choose place and date</string>
     <string name="lable_advancedSearch">Advanced search</string>
+    <string name="title_activity_amount_passagers">AmountPassagers</string>
 </resources>
