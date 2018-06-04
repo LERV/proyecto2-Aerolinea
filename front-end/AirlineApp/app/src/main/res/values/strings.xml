@@ -30,4 +30,14 @@
     <string name="title_activity_crear_cuenta">CrearCuenta</string>
     <string name="title_activity_update_account">UpdateAccount</string>
     <string name="title_activity_my_trips">MyTrips</string>
+
+    <!-- Strings related to Search -->
+    <string name="label_from">From</string>
+    <string name="label_to">To</string>
+    <string name="label_Map">Map</string>
+    <string name="label_departOn">Depart on</string>
+    <string name="lable_return">Return</string>
+    <string name="lable_nextStep">Continue</string>
+    <string name="lable_step1">Step 1 : Choose place and date</string>
+    <string name="lable_advancedSearch">Advanced search</string>
 </resources>
