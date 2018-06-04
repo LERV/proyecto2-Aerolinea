@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Flights</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id flight</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Date</th>
+      <th>Class</th>
+      <th>Duration</th>
+      <th>Price</th>
+      <th>Airplane</th>
+      <th>Time departure</th>
+      <th>Time arrival</th>
+      <th>Flight distance</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @flights.each do |flight| %>
+      <tr>
+        <td><%= flight.id_flight %></td>
+        <td><%= flight.from %></td>
+        <td><%= flight.to %></td>
+        <td><%= flight.date %></td>
+        <td><%= flight.class %></td>
+        <td><%= flight.duration %></td>
+        <td><%= flight.price %></td>
+        <td><%= flight.airplane %></td>
+        <td><%= flight.time_departure %></td>
+        <td><%= flight.time_arrival %></td>
+        <td><%= flight.flight_distance %></td>
+        <td><%= link_to 'Show', flight %></td>
+        <td><%= link_to 'Edit', edit_flight_path(flight) %></td>
+        <td><%= link_to 'Destroy', flight, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Flight', new_flight_path %>

@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id flight:</strong>
+  <%= @flight.id_flight %>
+</p>
+
+<p>
+  <strong>From:</strong>
+  <%= @flight.from %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @flight.to %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @flight.date %>
+</p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @flight.class %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @flight.duration %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @flight.price %>
+</p>
+
+<p>
+  <strong>Airplane:</strong>
+  <%= @flight.airplane %>
+</p>
+
+<p>
+  <strong>Time departure:</strong>
+  <%= @flight.time_departure %>
+</p>
+
+<p>
+  <strong>Time arrival:</strong>
+  <%= @flight.time_arrival %>
+</p>
+
+<p>
+  <strong>Flight distance:</strong>
+  <%= @flight.flight_distance %>
+</p>
+
+<%= link_to 'Edit', edit_flight_path(@flight) %> |
+<%= link_to 'Back', flights_path %>
