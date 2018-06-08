@@ -41,4 +41,17 @@
     <string name="lable_step1">Step 1 : Choose place and date</string>
     <string name="lable_advancedSearch">Advanced search</string>
     <string name="title_activity_amount_passagers">AmountPassagers</string>
+
+    <!-- Strings related to amount passagers -->
+    <string name="label_amount_of_passagers">Step 2: Select the amount of passagers</string>
+    <string name="label_adults">Adults</string>
+    <string name="label_children">Children</string>
+    <string name="label_select_class">Select the class</string>
+    <string name="label_economy">Economy</string>
+    <string name="label_business">Business</string>
+    <string name="label_premium">Premium</string>
+    <string name="label_see_clases">See clases</string>
+
+
 </resources>
+
