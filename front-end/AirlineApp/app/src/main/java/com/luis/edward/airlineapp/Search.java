@@ -145,9 +145,9 @@ public class Search extends AppCompatActivity
             //para cargar la foto de la persona
             Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
 
-        }else{
-            goLoginScreen();
-        }
+        }/*else{
+            goLoginScreen(); //Arreglar porque si inicia sin Goole me devuelve al login
+        }*/
     }
 
     private void goLoginScreen() {
