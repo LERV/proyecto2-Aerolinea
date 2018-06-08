@@ -8,4 +8,12 @@
     tools:context=".FlightsList"
     tools:showIn="@layout/app_bar_flights_list">
 
+    <GridView
+        android:id="@+id/gridView_listFlights"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="1"
+        android:background="#3a3a3a"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp" />
 </android.support.constraint.ConstraintLayout>

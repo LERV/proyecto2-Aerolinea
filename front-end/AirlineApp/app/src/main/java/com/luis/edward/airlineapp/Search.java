@@ -233,4 +233,9 @@ public class Search extends AppCompatActivity
         Intent intent = new Intent(this, AmountPassagers.class);
         startActivity(intent);
     }
+
+    public void go_mapActivity(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
 }

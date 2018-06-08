@@ -12,9 +12,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
+
+import java.util.ArrayList;
 
 public class FlightsList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    GridView gridView_flights;
+    ArrayList<String> array_prices;
+    ArrayList<String> array_origin_places;
+    ArrayList<String> array_destiny_places;
+    ArrayList<String> array_flight_departure;
+    ArrayList<String> array_flight_arrival;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,50 @@ public class FlightsList extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //--------------------------------------------------------------------
+        //--------------------------------------------------------------------
+
+        array_prices = new ArrayList<String>();
+        array_origin_places = new ArrayList<String>();
+        array_destiny_places = new ArrayList<String>();
+        array_flight_departure = new ArrayList<String>();
+        array_flight_arrival = new ArrayList<String>();
+
+        array_prices.add("500");
+        array_prices.add("250");
+        array_prices.add("300");
+        array_prices.add("699");
+        array_prices.add("1000");
+        array_origin_places.add("San Jose");
+        array_origin_places.add("Budapest");
+        array_origin_places.add("Texas");
+        array_origin_places.add("Liberia");
+        array_origin_places.add("Helsinki");
+
+        array_destiny_places.add("Miami");
+        array_destiny_places.add("Munich");
+        array_destiny_places.add("San Jose");
+        array_destiny_places.add("Mexico DF");
+        array_destiny_places.add("Barcelona");
+
+        array_flight_departure.add("13:00");
+        array_flight_departure.add("21:30");
+        array_flight_departure.add("9:00");
+        array_flight_departure.add("7:00");
+        array_flight_departure.add("6:00");
+
+        array_flight_arrival.add("14:00");
+        array_flight_arrival.add("23:00");
+        array_flight_arrival.add("12:45");
+        array_flight_arrival.add("11:15");
+        array_flight_arrival.add("10:00");
+
+        gridView_flights = findViewById(R.id.gridView_listFlights);
+        GridAdapter adapter = new GridAdapter(FlightsList.this,array_prices,array_origin_places,array_destiny_places,array_flight_departure,array_flight_arrival);
+        gridView_flights.setAdapter(adapter);
+
+
     }
 
     @Override
