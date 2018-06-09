@@ -63,7 +63,8 @@
         <activity
             android:name=".AmountPassagers"
             android:label="@string/title_activity_amount_passagers"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".NewUser"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -44,6 +55,10 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +68,17 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener {
+
+
+
+    //Atributos API con Volley
+    private RequestQueue mRequestQueue;
+    private Cache cache;
+    private Network network;
+    private JsonArrayRequest jsonArrayRequest;
+    //Arrelgar y quitar
+    static ArrayList<ArrayList> all_json_users = new ArrayList<ArrayList>();
+    private static ArrayList<String> USER_CREDENTIALS=new ArrayList<>();
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -87,6 +113,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Log.i("Inicio","Empieza a conectarse...");
+
+
+
 
         ////|||||||||||||AUTENTICACION CON GOOGLE|||||||||||||||
         // Set the dimensions of the sign-in button
@@ -138,6 +169,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+
+    public void insertar(View v)
+    {
+        UsersController prueba=UsersController.getInstance();
+
+        prueba.putUser(this,"4","Gerald","Gaucho","ger@13.com");
+    }
+    public void bajar(View v)
+    {
+        UsersController prueba=UsersController.getInstance();
+
+        prueba.downloadDataFromAPi(getCacheDir());
+
+        SystemClock.sleep(3000);
+    }
+    public void mensaje(View v)
+    {
+        UsersController prueba2=UsersController.getInstance();
+    String temp=prueba2.impDatos();
+        Toast.makeText(this, temp, Toast.LENGTH_SHORT).show();
+    }
+
+    //Para crear nueva cuenta
+    public void clickNewUser(View view)
+    {
+        Intent intent = new Intent(this, NewUser.class);
+
+        startActivity(intent);
     }
 
     private void populateAutoComplete() {
