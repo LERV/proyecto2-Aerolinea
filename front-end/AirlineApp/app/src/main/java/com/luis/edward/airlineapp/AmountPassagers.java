@@ -2,9 +2,11 @@ package com.luis.edward.airlineapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +42,15 @@ public class AmountPassagers extends AppCompatActivity
     private TextView nameUser;
     private TextView emailUser;
     private View navHeader;
+    private RadioGroup radioGroup;
+    private RadioButton rb_economy;
+    private RadioButton rb_business;
+    private RadioButton rb_premium;
+
+    private TextView textView_see_clases;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +82,29 @@ public class AmountPassagers extends AppCompatActivity
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
+        //-------------------------------------------------------
+        //-------------------Number picker------------------------
+        com.shawnlin.numberpicker.NumberPicker numberPicker_adults =  findViewById(R.id.number_picker_adults);
+        numberPicker_adults.setOnValueChangedListener(new com.shawnlin.numberpicker.NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(com.shawnlin.numberpicker.NumberPicker picker, int oldVal, int newVal) {
+                Log.d("numero",String.valueOf(newVal));
+            }
+        });
+        //-------------------------------------------------------
+        //-------------------Radio Buttons----------------------
+
+        radioGroup = findViewById(R.id.radioGroup_class);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                Log.d("perro",String.valueOf(i));
+            }
+        });
+
+        //------------------------------------------------------
+        textView_see_clases = findViewById(R.id.textView_class_detail);
+
     }
 
     @Override
@@ -179,5 +216,15 @@ public class AmountPassagers extends AppCompatActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public void go_classes_screen(View view){
+        Intent intent = new Intent(this, Classes.class);
+        startActivity(intent);
+    }
+
+    public void go_flights_list(View view){
+        Intent intent = new Intent(this, FlightsList.class);
+        startActivity(intent);
     }
 }

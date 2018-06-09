@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
+                    android:onClick="go_mapActivity"
                     android:text="@string/label_Map" />
 
 
@@ -91,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
+                    android:onClick="go_mapActivity"
                     android:text="@string/label_Map" />
 
             </LinearLayout>

@@ -1,6 +1,8 @@
 package com.luis.edward.airlineapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -12,9 +14,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+
+import java.util.ArrayList;
 
 public class FlightsList extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+
+    private GoogleApiClient googleApiClient;
+    private ImageView imageUser;
+    private TextView nameUser;
+    private TextView emailUser;
+    private View navHeader;
+
+    GridView gridView_flights;
+    ArrayList<String> array_prices;
+    ArrayList<String> array_origin_places;
+    ArrayList<String> array_destiny_places;
+    ArrayList<String> array_flight_departure;
+    ArrayList<String> array_flight_arrival;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +54,6 @@ public class FlightsList extends AppCompatActivity
         setContentView(R.layout.activity_flights_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +63,95 @@ public class FlightsList extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+//-----------------------------------------------------
+        //---------Para conectar a google silenciosamente y cargar foto nombre email
+        navHeader = navigationView.getHeaderView(0);
+        imageUser = (ImageView) navHeader.findViewById(R.id.imageViewGoogle_user);
+        nameUser = (TextView) navHeader.findViewById(R.id.nameGoogle_user);
+        emailUser = (TextView) navHeader.findViewById(R.id.emailGoogle_user);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .build();
+
+        //--------------------------------------------------------------------
+        //--------------------------------------------------------------------
+
+        array_prices = new ArrayList<String>();
+        array_origin_places = new ArrayList<String>();
+        array_destiny_places = new ArrayList<String>();
+        array_flight_departure = new ArrayList<String>();
+        array_flight_arrival = new ArrayList<String>();
+
+        array_prices.add("500");
+        array_prices.add("250");
+        array_prices.add("300");
+        array_prices.add("699");
+        array_prices.add("1000");
+        array_origin_places.add("San Jose");
+        array_origin_places.add("Budapest");
+        array_origin_places.add("Texas");
+        array_origin_places.add("Liberia");
+        array_origin_places.add("Helsinki");
+
+        array_destiny_places.add("Miami");
+        array_destiny_places.add("Munich");
+        array_destiny_places.add("San Jose");
+        array_destiny_places.add("Mexico DF");
+        array_destiny_places.add("Barcelona");
+
+        array_flight_departure.add("13:00");
+        array_flight_departure.add("21:30");
+        array_flight_departure.add("9:00");
+        array_flight_departure.add("7:00");
+        array_flight_departure.add("6:00");
+
+        array_flight_arrival.add("14:00");
+        array_flight_arrival.add("23:00");
+        array_flight_arrival.add("12:45");
+        array_flight_arrival.add("11:15");
+        array_flight_arrival.add("10:00");
+
+        gridView_flights = findViewById(R.id.gridView_listFlights);
+        GridAdapter adapter = new GridAdapter(FlightsList.this,array_prices,array_origin_places,array_destiny_places,array_flight_departure,array_flight_arrival);
+        gridView_flights.setAdapter(adapter);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+        if(opr.isDone()){
+            GoogleSignInResult result = opr.get();
+            handleSignInResult(result);
+        }else{
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                    handleSignInResult(googleSignInResult);
+                }
+            });
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if(result.isSuccess()){
+            GoogleSignInAccount account = result.getSignInAccount();
+
+            nameUser.setText(account.getDisplayName());
+            emailUser.setText(account.getEmail());
+            //para cargar la foto de la persona
+            Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
+
+        }else{
+            goLoginScreen();
+        }
     }
 
     @Override
@@ -89,11 +201,36 @@ public class FlightsList extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
+            log_out();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void log_out(){
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                if(status.isSuccess()){
+                    goLoginScreen();
+                }else{
+                    Toast.makeText(FlightsList.this,"Session could not be closed",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

@@ -50,7 +50,22 @@
     <string name="label_economy">Economy</string>
     <string name="label_business">Business</string>
     <string name="label_premium">Premium</string>
-    <string name="label_see_clases">See clases</string>
+    <string name="label_see_all_clases_detail">See all class detail</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!-- Strings related to flights list -->
+    <string name="label_price">$500</string>
+    <string name="label_date_word">Date</string>
+    <string name="label_date">10/7/2018</string>
+    <string name="label_departure_time">Departure time</string>
+    <string name="label_arival_time">Arrival time</string>
+    <string name="label_hour">10:00</string>
+    <string name="label_hour_arrival">13:00</string>
+    <string name="label_plane">BOING-747</string>
+    <string name="label_origin">San jose</string>
+    <string name="label_destiny">Miami</string>
+    <string name="label_Select">Select</string>
+
 
 
 </resources>
