@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Update Beaches</title>
+
+    <!-- Bootstrap -->
+  <!--===============================================================================================-->  
+  <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->  
+  <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="css/util.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+ <script type="text/javascript">
+function check() {
+  var nombre;
+      $.ajax({
+      type: 'GET',
+      url: 'https://beach-finder.herokuapp.com/beaches/11.json',
+      data: data,
+      async: false,
+      beforeSend: function (xhr) {
+        if (xhr && xhr.overrideMimeType) {
+          xhr.overrideMimeType('application/json;charset=utf-8');
+        }
+      },
+      dataType: 'json',
+      success: function (data) {
+        //Do stuff with the JSON data
+        alert(data.beach_name);
+
+      }
+    });
+          document.getElementById('beach_name').value='new value here'
+     } 
+
+
+
+  //start ajax request
+ var obj = jQuery.parseJSON( '{ "name": "John" }' );  
+ alert( obj.name);
+
+    $.ajax({
+      type: 'GET',
+      url: 'https://beach-finder.herokuapp.com/beaches/11.json',
+      data: {'name':name1},
+      async: false,
+      beforeSend: function (xhr) {
+        if (xhr && xhr.overrideMimeType) {
+          xhr.overrideMimeType('application/json;charset=utf-8');
+        }
+      },
+      dataType: 'json',
+      success: function (data) {
+        //Do stuff with the JSON data
+        alert("Si funciono");
+
+      }
+    });
+ </script>
+ </script>
+  </head>
+<body>
+
+
+
+  <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">About</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Beaches management</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="newBeach.html">New Beach</a>
+      <a class="dropdown-item" href="#">See Beaches</a>
+      <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+    </div>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Users management</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">New User</a>
+      <a class="dropdown-item" href="#">See Users</a>
+      <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Sign out</a>
+  </li>
+ </ul>
+ 
+ 
+<div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100">
+      <center>
+     <h1>BeacheFinder!</h1>
+             <div style="background-color: lightblue;" >
+  <h1>Adding new beach</h1>
+          <form id="form" action="" method="post">
+          <div class="form-group">
+            <label for="exampleInputEmail1" >Beach name</label>
+            <input type="text" class="form-control" id="beach_name" name="beach_name" placeholder="">
+          </div>
+          
+          <div class="form-group">
+            <label for="exampleInputEmail1">Location</label>
+            <input type="text" class="form-control" name="location" placeholder="">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1" >Sand color</label>
+            <input type="text" class="form-control" name="sand_color" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" >description</label>
+            <input type="text" class="form-control" name="description" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Main image</label>
+            <input type="text" class="form-control" name="main_image" placeholder=" ">
+          </div> 
+          <div class="form-group">
+            <label for="exampleInputEmail1">Second image</label>
+            <input type="text" class="form-control" name="second_image" placeholder=" ">
+          </div> 
+          <div class="form-group">
+            <label for="exampleInputEmail1">Latitude</label>
+            <input type="text" class="form-control" name="latitude" placeholder=" ">
+          </div> 
+          <div class="form-group">
+            <label for="exampleInputEmail1">Longitude</label>
+            <input type="text" class="form-control" name="longitude" placeholder=" ">
+          </div> 
+          <div class="form-group">
+            <label for="exampleInputEmail1">Wave type</label>
+            <input type="text" class="form-control" name="wave_type" placeholder=" ">
+          </div> 
+          <div class="form-group">
+            <label for="exampleInputEmail1">Snorkeling </label>
+            <input type="checkbox" class="form-control" name="snorkeling" value="1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Swimming </label>
+            <input type="checkbox" class="form-control" name="swimming" value="1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Shade </label>
+            <input type="checkbox" class="form-control" name="shade" value="1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Night life </label>
+            <input type="checkbox" class="form-control" name="night_life" value="1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Camping zone </label>
+            <input type="checkbox" class="form-control" name="camping_zone" value="1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Protected area </label>
+            <input type="checkbox" class="form-control" name="protected_area" value="1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Cristal water </label>
+            <input type="checkbox" class="form-control" name="cristal_water" value="1" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Vegetation</label>
+            <input type="text" class="form-control" name="vegetation" placeholder=" ">
+          </div> 
+          <div class="form-group">
+            <label for="exampleInputEmail1">Comments</label>
+            <input type="text" class="form-control" name="comments" placeholder=" ">
+          </div> 
+
+      
+          <input id="submit" type="button" name="submit" value="submit">
+        </form>
+  </div>
+          
+      </center>
+      </div>
+    </div>
+  </div>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        // click on button submit
+        $("#submit").on('click', function(){
+            // send ajax
+            $.ajax({
+                url: 'https://beach-finder.herokuapp.com/beaches', // url where to submit the request
+                type : "POST", // type of action POST || GET
+                dataType : 'json', // data type
+                data : $("#form").serialize(), // post data || get data
+                success : function(result) {
+                    // you can see the result from the console
+                    // tab of the developer tools
+                    console.log(result);
+                    
+                },
+                error: function(xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                }
+            })
+        alert("Beach has been added");
+        document.location = 'mainPage.html';
+        });
+    });
+    
+
+</script>
+
+
+
+  
+</body>
+
+
+
+<!--===============================================================================================-->  
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/bootstrap/js/popper.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/tilt/tilt.jquery.min.js"></script>
+  <script >
+    $('.js-tilt').tilt({
+      scale: 1.1
+    })
+  </script>
+<!--===============================================================================================-->
+  <script src="js/main.js"></script>
+  </body>
+</html>
