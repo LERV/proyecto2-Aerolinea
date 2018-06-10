@@ -21,7 +21,7 @@ test:
   database: db/test.sqlite3
 
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['HEROKU_POSTGRESQL_ORANGE_URL'] %>
 
   
 # On Heroku and other platform providers, you may have a full connection URL
