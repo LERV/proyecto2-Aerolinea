@@ -67,6 +67,15 @@
     <string name="label_Select">Select</string>
 
 
+    <!-- Strings related to activity classes -->
+    <string name="Classes_Economy_Class">Economy Class</string>
+    <string name="Classes_Business_Class">Business Class</string>
+    <string name="Classes_Premium_Class">Premium Class</string>
+
+    <!-- Strings related to flight-confirmation -->
+
+
+
 
 </resources>
 
