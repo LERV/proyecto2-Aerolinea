@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token
 
   # GET /users
   # GET /users.json
@@ -25,7 +24,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    encriptarContraseña
+    encriptPassword
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -42,7 +41,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    encriptarContraseña
+    encriptPassword
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -70,14 +69,15 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-
     #Encriptar la contraseña
-    def encriptarContraseña
-      params[:password] = "contraseñaEncripta"
+    def encriptPassword
+      temp=''
+      temp=params[:password]
+      #params[:password] = "n$_f&gJTXhd:"<<temp<<":df*+dRTEsg"
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit(:name, :last_name, :password, :email, :profile_picture, :id_flight)
+      params.require(:user).permit(:name, :last_name, :email, :password, :profile_picture, :id_flights, :record_kilometers)
     end
 end

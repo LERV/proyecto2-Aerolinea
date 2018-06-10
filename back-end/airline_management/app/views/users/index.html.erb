@@ -7,10 +7,11 @@
     <tr>
       <th>Name</th>
       <th>Last name</th>
-      <th>Password</th>
       <th>Email</th>
+      <th>Password</th>
       <th>Profile picture</th>
-      <th>Id flight</th>
+      <th>Id flights</th>
+      <th>Record kilometers</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,10 +21,11 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.last_name %></td>
-        <td><%= user.password %></td>
         <td><%= user.email %></td>
+        <td><%= user.password %></td>
         <td><%= user.profile_picture %></td>
-        <td><%= user.id_flight %></td>
+        <td><%= user.id_flights %></td>
+        <td><%= user.record_kilometers %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -55,7 +55,7 @@ public class FlightsController {
 
 
     //Arrelgar y quitar
-    static ArrayList<ArrayList> all_json_users = new ArrayList<ArrayList>();
+    static ArrayList<ArrayList> all_json_flights = new ArrayList<ArrayList>();
     private static ArrayList<String> USER_CREDENTIALS=new ArrayList<>();
 
 
@@ -75,6 +75,11 @@ public class FlightsController {
             temp+=i;
         }
         return temp;
+    }
+
+    public ArrayList<ArrayList> getAll_json_flights()
+    {
+        return  all_json_flights;
     }
 
     public void downloadDataFromAPi(File getCacheDir) // Pasar getCacheDir()
@@ -132,7 +137,7 @@ public class FlightsController {
 
 
 
-                                all_json_users.add(json_user);
+                                all_json_flights.add(json_user);
                                 //Actualizar todos los credenciales para el login
                                 USER_CREDENTIALS.add(json_user.get(3)+":"+json_user.get(4));
                                 //USER_Data.add(json_user.get(1)+":"+json_user.get(2)+":"+json_user.get(4)+":"+json_user.get(5)+":"+json_user.get(6));

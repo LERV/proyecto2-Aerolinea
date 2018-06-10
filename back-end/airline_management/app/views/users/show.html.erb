@@ -11,13 +11,13 @@
 </p>
 
 <p>
-  <strong>Password:</strong>
-  <%= @user.password %>
+  <strong>Email:</strong>
+  <%= @user.email %>
 </p>
 
 <p>
-  <strong>Email:</strong>
-  <%= @user.email %>
+  <strong>Password:</strong>
+  <%= @user.password %>
 </p>
 
 <p>
@@ -26,8 +26,13 @@
 </p>
 
 <p>
-  <strong>Id flight:</strong>
-  <%= @user.id_flight %>
+  <strong>Id flights:</strong>
+  <%= @user.id_flights %>
+</p>
+
+<p>
+  <strong>Record kilometers:</strong>
+  <%= @user.record_kilometers %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

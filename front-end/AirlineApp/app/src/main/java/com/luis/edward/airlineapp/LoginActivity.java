@@ -177,6 +177,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         UsersController prueba=UsersController.getInstance();
 
         prueba.putUser(this,"4","Gerald","Gaucho","ger@13.com");
+
     }
     public void bajar(View v)
     {
