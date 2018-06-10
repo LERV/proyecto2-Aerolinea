@@ -67,6 +67,24 @@
     <string name="label_Select">Select</string>
 
 
+    <!-- Strings related to activity classes -->
+    <string name="Classes_Economy_Class">Economy Class</string>
+    <string name="Classes_Business_Class">Business Class</string>
+    <string name="Classes_Premium_Class">Premium Class</string>
+
+    <!-- Strings related to flight-confirmation -->
+    <string name="label_flight_detail">Flight confirmation</string>
+    <string name="label_date_confirmation">Date</string>
+    <string name="label_departure_confirmation">Departure time</string>
+    <string name="label_arrival_confirmation">Arrival time</string>
+    <string name="label_duration_confirmation">Duration</string>
+    <string name="label_class_confirmation">Class</string>
+    <string name="label_price_one_person_confirmation">Price single person</string>
+    <string name="label_taxes">Taxes</string>
+    <string name="label_total_price_confirmation">Total price</string>
+    <string name="label_Book">Book</string>
+
+
 
 </resources>
 

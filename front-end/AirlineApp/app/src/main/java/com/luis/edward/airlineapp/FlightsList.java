@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,6 +49,9 @@ public class FlightsList extends AppCompatActivity
     ArrayList<String> array_flight_departure;
     ArrayList<String> array_flight_arrival;
 
+    ArrayList<ArrayList<String>> all_flights_list;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,49 +82,57 @@ public class FlightsList extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
 
-        //--------------------------------------------------------------------
-        //--------------------------------------------------------------------
+        //----------------------------------------------------------------
+        //cargo all flights list del API
+        all_flights_list = new ArrayList<ArrayList<String>>();
+        //AQUI DECIR ALL FLIGHTS_LIST = LLAMAR API
 
+        //AQUI YA DEBERIA TENER LA LISTA DE LISTAS
+        //--------------------------------------------------------------------
+        //--------------------------------------------------------------------
         array_prices = new ArrayList<String>();
         array_origin_places = new ArrayList<String>();
         array_destiny_places = new ArrayList<String>();
         array_flight_departure = new ArrayList<String>();
         array_flight_arrival = new ArrayList<String>();
 
+        seleccionaVuelos();
+
         array_prices.add("500");
         array_prices.add("250");
-        array_prices.add("300");
-        array_prices.add("699");
-        array_prices.add("1000");
         array_origin_places.add("San Jose");
         array_origin_places.add("Budapest");
-        array_origin_places.add("Texas");
-        array_origin_places.add("Liberia");
-        array_origin_places.add("Helsinki");
-
         array_destiny_places.add("Miami");
         array_destiny_places.add("Munich");
-        array_destiny_places.add("San Jose");
-        array_destiny_places.add("Mexico DF");
-        array_destiny_places.add("Barcelona");
-
         array_flight_departure.add("13:00");
         array_flight_departure.add("21:30");
-        array_flight_departure.add("9:00");
-        array_flight_departure.add("7:00");
-        array_flight_departure.add("6:00");
-
         array_flight_arrival.add("14:00");
         array_flight_arrival.add("23:00");
-        array_flight_arrival.add("12:45");
-        array_flight_arrival.add("11:15");
-        array_flight_arrival.add("10:00");
 
         gridView_flights = findViewById(R.id.gridView_listFlights);
         GridAdapter adapter = new GridAdapter(FlightsList.this,array_prices,array_origin_places,array_destiny_places,array_flight_departure,array_flight_arrival);
         gridView_flights.setAdapter(adapter);
 
+    }
 
+    private void seleccionaVuelos() {
+        String origen = Search.info_selected_user.get(0);
+        String destino = Search.info_selected_user.get(1);
+
+        //recorro lista de listas
+        for(int i=0; i<all_flights_list.size(); i++){
+            //agarro cada vuelo especifico
+            ArrayList<String> vueloEspecifico = all_flights_list.get(i);
+            //pregunto si origen y destino es igual a lo que el usuario especifico
+            if(vueloEspecifico.get(2)==origen && vueloEspecifico.get(3)==destino){
+                //si si cumple entonces lleno las listas que inflan el grid
+                array_origin_places.add(vueloEspecifico.get(2));
+                array_destiny_places.add(vueloEspecifico.get(3));
+                array_flight_departure.add(vueloEspecifico.get(8));
+                array_flight_arrival.add(vueloEspecifico.get(9));
+                array_prices.add(vueloEspecifico.get(6));
+            }
+        }
     }
 
     @Override

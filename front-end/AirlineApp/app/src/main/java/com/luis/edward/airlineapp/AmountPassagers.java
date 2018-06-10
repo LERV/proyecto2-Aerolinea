@@ -34,6 +34,8 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.util.ArrayList;
+
 public class AmountPassagers extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -49,8 +51,10 @@ public class AmountPassagers extends AppCompatActivity
 
     private TextView textView_see_clases;
 
-
-
+    String num_adults;
+    String num_children;
+    String selected_clase;
+    ArrayList<String> info_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +87,23 @@ public class AmountPassagers extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
         //-------------------------------------------------------
-        //-------------------Number picker------------------------
+        //-------------------Number picker Adults------------------------
         com.shawnlin.numberpicker.NumberPicker numberPicker_adults =  findViewById(R.id.number_picker_adults);
         numberPicker_adults.setOnValueChangedListener(new com.shawnlin.numberpicker.NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(com.shawnlin.numberpicker.NumberPicker picker, int oldVal, int newVal) {
-                Log.d("numero",String.valueOf(newVal));
+                Log.d("numero_adult",String.valueOf(newVal));
+                num_adults =  String.valueOf(newVal);
+            }
+        });
+        //-------------------------------------------------------
+        //-------------------Number picker Children------------------------
+        com.shawnlin.numberpicker.NumberPicker numberPicker_children =  findViewById(R.id.number_picker_children);
+        numberPicker_children.setOnValueChangedListener(new com.shawnlin.numberpicker.NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(com.shawnlin.numberpicker.NumberPicker picker, int oldVal, int newVal) {
+                Log.d("numero_children",String.valueOf(newVal));
+                num_children = String.valueOf(newVal);
             }
         });
         //-------------------------------------------------------
@@ -99,11 +114,24 @@ public class AmountPassagers extends AppCompatActivity
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 Log.d("perro",String.valueOf(i));
+                if(i==2131361968){
+                    selected_clase = "economy";
+                }
+                if(i==2131361967){
+                    selected_clase = "business";
+                }
+                if(i==2131361969){
+                    selected_clase = "premium";
+                }
             }
         });
 
         //------------------------------------------------------
         textView_see_clases = findViewById(R.id.textView_class_detail);
+
+        num_adults = "1";
+        num_children = "0";
+        selected_clase = "economy";
 
     }
 
@@ -224,6 +252,14 @@ public class AmountPassagers extends AppCompatActivity
     }
 
     public void go_flights_list(View view){
+        Log.d("data",num_adults);
+        Log.d("data",num_children);
+        Log.d("data",selected_clase);
+
+        Search.info_selected_user.add(num_adults);
+        Search.info_selected_user.add(num_children);
+        Search.info_selected_user.add(selected_clase);
+
         Intent intent = new Intent(this, FlightsList.class);
         startActivity(intent);
     }

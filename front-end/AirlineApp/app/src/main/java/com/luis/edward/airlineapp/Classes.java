@@ -29,6 +29,8 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import org.w3c.dom.Text;
+
 public class Classes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -37,6 +39,10 @@ public class Classes extends AppCompatActivity
     private TextView nameUser;
     private TextView emailUser;
     private View navHeader;
+
+    private TextView economy;
+    private TextView business;
+    private TextView premium;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +75,42 @@ public class Classes extends AppCompatActivity
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
+
+        //----------------------------------------------------
+        //----------------------------------------------------
+        economy = findViewById(R.id.text_view_eco_class);
+        business = findViewById(R.id.buss_class);
+        premium = findViewById(R.id.prem_class);
+
+        economy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DetalleClasses.class);
+                intent.putExtra("clase",1);
+                startActivity(intent);
+            }
+        });
+
+        business.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DetalleClasses.class);
+                intent.putExtra("clase",2);
+                startActivity(intent);
+            }
+        });
+
+        premium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DetalleClasses.class);
+                intent.putExtra("clase",3);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     @Override
     protected void onStart() {
@@ -182,4 +223,5 @@ public class Classes extends AppCompatActivity
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 }

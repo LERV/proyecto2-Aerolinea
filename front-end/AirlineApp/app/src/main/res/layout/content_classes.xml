@@ -8,4 +8,45 @@
     tools:context=".Classes"
     tools:showIn="@layout/app_bar_classes">
 
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TextView
+            android:id="@+id/text_view_eco_class"
+            android:layout_width="match_parent"
+            android:layout_height="172dp"
+            android:fontFamily="@font/roboto_thin"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="@string/Classes_Economy_Class"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/buss_class"
+            android:layout_width="match_parent"
+            android:layout_height="181dp"
+            android:fontFamily="@font/roboto_thin"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="@string/Classes_Business_Class"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/prem_class"
+            android:layout_width="match_parent"
+            android:layout_height="168dp"
+            android:fontFamily="@font/roboto_thin"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="@string/Classes_Premium_Class"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
