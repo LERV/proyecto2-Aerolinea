@@ -8,6 +8,14 @@
     tools:context=".FlightsList"
     tools:showIn="@layout/app_bar_flights_list">
 
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No flights found !"
+        android:textSize="18sp"
+        android:visibility="invisible" />
+
     <GridView
         android:id="@+id/gridView_listFlights"
         android:layout_width="match_parent"
