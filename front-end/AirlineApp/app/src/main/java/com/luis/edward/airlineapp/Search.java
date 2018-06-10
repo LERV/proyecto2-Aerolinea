@@ -40,6 +40,7 @@ import com.google.android.gms.common.api.Status;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.luis.edward.airlineapp.R.id.emailGoogle_user;
@@ -55,10 +56,14 @@ public class Search extends AppCompatActivity
     private TextView nameUser;
     private TextView emailUser;
     private View navHeader;
-    private EditText departure_edit;
-    private EditText return_edit;
+
     String currentDateString;
 
+    private EditText departure_edit;
+    private TextView origin;
+    private TextView destiny;
+
+    static ArrayList<String> info_selected_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +98,6 @@ public class Search extends AppCompatActivity
 
         //-----------------------------------------------------
         //-----------------PARA ESTABLECER LA FECHA DE PARTIDA---------------------
-        //---------------El de return lo puse invisible por mientras...
         departure_edit = findViewById(R.id.editText_depart);
         departure_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +108,12 @@ public class Search extends AppCompatActivity
         });
 
         //------------------------------------------------------
+        ///////////////////Agarro datos de textss//////////////////////////////
+
+        origin = findViewById(R.id.auto_from);
+        destiny = findViewById(R.id.auto_to);
+
+        info_selected_user = new ArrayList<String>();
     }
 
     @Override
@@ -115,10 +125,6 @@ public class Search extends AppCompatActivity
         currentDateString = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
         departure_edit.setText(currentDateString);
     }
-
-
-
-
 
     @Override
     protected void onStart() {
@@ -230,8 +236,23 @@ public class Search extends AppCompatActivity
     }
 
     public void go_amountPassager_screen(View view){
-        Intent intent = new Intent(this, AmountPassagers.class);
-        startActivity(intent);
+        String from = origin.getText().toString();
+        String to = destiny.getText().toString();
+        String fecha = departure_edit.getText().toString();
+        if(from.compareTo("")==0 || to.compareTo("")==0 || fecha.compareTo("")==0){
+            Toast.makeText(this, "Complete all the information",
+                    Toast.LENGTH_LONG).show();
+        }else{
+            Log.d("data",from);
+            Log.d("data",to);
+            Log.d("data",fecha);
+            info_selected_user.add(from);
+            info_selected_user.add(to);
+            info_selected_user.add(fecha);
+
+            Intent intent = new Intent(this, AmountPassagers.class);
+            startActivity(intent);
+        }
     }
 
     public void go_mapActivity(View view){
