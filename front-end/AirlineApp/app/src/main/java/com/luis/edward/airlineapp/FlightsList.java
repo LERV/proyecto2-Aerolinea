@@ -51,6 +51,8 @@ public class FlightsList extends AppCompatActivity
     ArrayList<String> array_flight_departure;
     ArrayList<String> array_flight_arrival;
 
+    ArrayList<ArrayList<String>> array_flights_apply = new ArrayList<ArrayList<String>>();
+
     TextView empty_txtview;
 
 
@@ -111,14 +113,14 @@ public class FlightsList extends AppCompatActivity
         gridView_flights.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(),"Item "+i+" seleccionado",
+                        Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(getApplicationContext(),DetalleFlight.class);
-                intent.putStringArrayListExtra("selected_flight",Search.all_flights_list.get(i));
+                intent.putStringArrayListExtra("selected_flight",array_flights_apply.get(i));
                 startActivity(intent);
             }
         });
-
-
-
     }
 
     private void seleccionaVuelos() {
@@ -135,6 +137,10 @@ public class FlightsList extends AppCompatActivity
             Log.d("mop","origen api es"+vueloEspecifico.get(2).toLowerCase());
             Log.d("mop","destino api es"+vueloEspecifico.get(3).toLowerCase());
             if((vueloEspecifico.get(2).toLowerCase().compareTo(origen)==0) && (vueloEspecifico.get(3).toLowerCase().compareTo(destino))==0){
+                array_flights_apply.add(vueloEspecifico);
+                Log.d("mop","lista all vacia");
+                empty_txtview = findViewById(R.id.txt_empty);
+                empty_txtview.setVisibility(View.INVISIBLE);
                 Log.d("mop","lista all dio positiva");
                 //si si cumple entonces lleno las listas que inflan el grid
                 array_origin_places.add(vueloEspecifico.get(2));
@@ -161,7 +167,7 @@ public class FlightsList extends AppCompatActivity
                 }
             });
         }
-
+        array_flights_apply.clear();
         array_prices.clear();
         array_origin_places.clear();
         array_destiny_places.clear();
