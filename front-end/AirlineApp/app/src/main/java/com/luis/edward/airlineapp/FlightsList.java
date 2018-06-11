@@ -2,6 +2,7 @@ package com.luis.edward.airlineapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -89,7 +91,9 @@ public class FlightsList extends AppCompatActivity
 
         FlightsController prueba=FlightsController.getInstance().getInstance();
         prueba.downloadDataFromAPi(getCacheDir());
+        SystemClock.sleep(3000);
         all_flights_list = prueba.getAll_json_flights();
+
 
         //AQUI YA DEBERIA TENER LA LISTA DE LISTAS
         //--------------------------------------------------------------------
@@ -102,7 +106,7 @@ public class FlightsList extends AppCompatActivity
 
         seleccionaVuelos();
 
-        array_prices.add("500");
+        /*array_prices.add("500");
         array_prices.add("250");
         array_origin_places.add("San Jose");
         array_origin_places.add("Budapest");
@@ -111,11 +115,22 @@ public class FlightsList extends AppCompatActivity
         array_flight_departure.add("13:00");
         array_flight_departure.add("21:30");
         array_flight_arrival.add("14:00");
-        array_flight_arrival.add("23:00");
+        array_flight_arrival.add("23:00");*/
 
         gridView_flights = findViewById(R.id.gridView_listFlights);
         GridAdapter adapter = new GridAdapter(FlightsList.this,array_prices,array_origin_places,array_destiny_places,array_flight_departure,array_flight_arrival);
         gridView_flights.setAdapter(adapter);
+
+        gridView_flights.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(),DetalleFlight.class);
+                intent.putStringArrayListExtra("selected_flight",all_flights_list.get(i));
+                startActivity(intent);
+            }
+        });
+
+
 
     }
 
@@ -166,7 +181,7 @@ public class FlightsList extends AppCompatActivity
             Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
 
         }else{
-            goLoginScreen();
+            //goLoginScreen();
         }
     }
 

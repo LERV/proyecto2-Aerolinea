@@ -163,7 +163,7 @@ public class AmountPassagers extends AppCompatActivity
             Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
 
         }else{
-            goLoginScreen();
+            //goLoginScreen();
         }
     }
 

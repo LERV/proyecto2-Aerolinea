@@ -29,6 +29,10 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
 public class DetalleFlight extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -37,6 +41,8 @@ public class DetalleFlight extends AppCompatActivity
     private TextView nameUser;
     private TextView emailUser;
     private View navHeader;
+
+    ArrayList<String> chosen_flight_info = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,40 @@ public class DetalleFlight extends AppCompatActivity
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
+
+        //------------------------------------------------------
+        //-------------------------------------------------------
+        Intent intent = getIntent();
+        chosen_flight_info = intent.getStringArrayListExtra("selected_flight");
+
+        TextView date = findViewById(R.id.tx_date_confirmation);
+        TextView depart = findViewById(R.id.tx_from_confirmation);
+        TextView arrival = findViewById(R.id.tx_to_confirmation);
+        TextView dep_time = findViewById(R.id.tx_departure_time_confirmation);
+        TextView arrival_time = findViewById(R.id.tx_arrival_time_confirmation);
+        TextView duration = findViewById(R.id.tx_duration_confirmation);
+
+        TextView plane = findViewById(R.id.tx_plane);
+        TextView price = findViewById(R.id.tx_total_price);
+        TextView total_price = findViewById(R.id.tx_total_price);
+
+
+        date.setText(chosen_flight_info.get(4));
+        depart.setText(chosen_flight_info.get(2));
+        arrival.setText(chosen_flight_info.get(3));
+        dep_time.setText(chosen_flight_info.get(8));
+        arrival_time.setText(chosen_flight_info.get(9));
+        duration.setText(chosen_flight_info.get(5));
+        plane.setText(chosen_flight_info.get(7));
+        price.setText(chosen_flight_info.get(6));
+
+        int adults = Integer.parseInt(Search.info_selected_user.get(3));
+        int children = Integer.parseInt(Search.info_selected_user.get(4));
+        int taxes = (int)(Integer.valueOf(chosen_flight_info.get(6))*(13/100.0f));
+        int precioTotal = Integer.valueOf(chosen_flight_info.get(6)) * adults + taxes;
+
+        total_price.setText(String.valueOf(precioTotal));
+
     }
 
     @Override
@@ -168,7 +208,7 @@ public class DetalleFlight extends AppCompatActivity
             Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
 
         }else{
-            goLoginScreen();
+            //goLoginScreen();
         }
     }
 
@@ -190,4 +230,14 @@ public class DetalleFlight extends AppCompatActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    public void book_flight(View view){
+        Toast.makeText(this, "Vuelo reservado",
+                Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, Search.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
 }
