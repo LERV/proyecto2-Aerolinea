@@ -70,6 +70,8 @@ public class Search extends AppCompatActivity
     Button map_from;
     Button map_to;
 
+    UsersController userData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,8 @@ public class Search extends AppCompatActivity
         destiny = findViewById(R.id.auto_to);
 
         info_selected_user = new ArrayList<String>();
+
+
     }
 
     @Override
@@ -150,8 +154,17 @@ public class Search extends AppCompatActivity
                 }
             });
         }
+        //Se descarga la informacion sobre los usuario nuevamente
+        userData=UsersController.getInstance();
+        userData.downloadDataFromAPi(getCacheDir());
+        Log.d("PAto","Lleggo hasta antes del temp");
+        int tempIdUser=Integer.parseInt(userData.getId());
+        Log.d("PAto2",userData.getId());
+        userData.setSessionUser(tempIdUser);
+
         all_flights_list.clear();
         info_selected_user.clear();
+
         ////////////////////////////////////////////////////////
         //cargo all flights list del API
         //AQUI DECIR ALL FLIGHTS_LIST = LLAMAR API

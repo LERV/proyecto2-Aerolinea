@@ -36,14 +36,14 @@ public class UsersController {
 
 
     //Variables para guardar usuario en sesion
-    private String id;
-    private String name;
-    private String last_name;
-    private String email;
-    private String password;
-    private String profile_picture;
-    private String id_flights;
-    String record_kilometers;
+    private String idSession;
+    private String nameSession;
+    private String last_nameSession;
+    private String emailSession;
+    private String passwordSession;
+    private String profile_pictureSession;
+    private String id_flightsSession;
+    String record_kilometersSession;
 
 
     //Variable para usar Volley para APIs
@@ -66,8 +66,8 @@ public class UsersController {
 
 
     //Arrelgar y quitar
-    private ArrayList<ArrayList> all_json_users = new ArrayList<ArrayList>();
-    private ArrayList<String> USER_CREDENTIALS=new ArrayList<>();
+    private ArrayList<ArrayList> all_json_users;
+    //private ArrayList<String> USER_CREDENTIALS;
 
 
     public static UsersController getInstance(){
@@ -82,38 +82,30 @@ public class UsersController {
         return all_json_users;
     }
 
-    public ArrayList<String> getUserCredentials() {
-        return USER_CREDENTIALS;
-    }
 
-    public String impDatos()
-    {
-        Log.i("Imp","Llammmo funcion");
-        String temp="";
-        for (String i:USER_CREDENTIALS)
-        {
-            temp+=i;
-        }
-        return temp;
-    }
+
+
 
 
 
     public void setSessionUser(int idActiveUser)
     {
 
+        //Hacer ciclo para arreglar que se cae cuando se hacer un PUT porque el all_jasn viene con lo dato en
+        //direfente orden y entonces el idActive no calza
+
         Log.d("SET","Va a hacer SET");
-        id = all_json_users.get(idActiveUser).get(0).toString();
-        name = all_json_users.get(idActiveUser).get(1).toString();
-        last_name = all_json_users.get(idActiveUser).get(2).toString();
-        email = all_json_users.get(idActiveUser).get(3).toString();
-        password = all_json_users.get(idActiveUser).get(4).toString();
+        idSession =  String.valueOf(idActiveUser);
+        nameSession = all_json_users.get(idActiveUser).get(1).toString();
+        last_nameSession = all_json_users.get(idActiveUser).get(2).toString();
+        emailSession = all_json_users.get(idActiveUser).get(3).toString();
+        passwordSession = all_json_users.get(idActiveUser).get(4).toString();
         Log.d("Password",all_json_users.get(idActiveUser).get(4).toString());
         Log.d("ProfilePicture",all_json_users.get(idActiveUser).get(5).toString());
         //if all_json_users.get(idActiveUser).get(5).toString()
-        profile_picture = all_json_users.get(idActiveUser).get(5).toString();
-        id_flights = all_json_users.get(idActiveUser).get(6).toString();
-        record_kilometers = all_json_users.get(idActiveUser).get(7).toString();
+        profile_pictureSession = all_json_users.get(idActiveUser).get(5).toString();
+        id_flightsSession = all_json_users.get(idActiveUser).get(6).toString();
+        record_kilometersSession = all_json_users.get(idActiveUser).get(7).toString();
 
     }
 
@@ -125,6 +117,14 @@ public class UsersController {
 
     public void downloadDataFromAPi(File getCacheDir) // Pasar getCacheDir()
     {
+
+        //Arrelgar y quitar
+        all_json_users = new ArrayList<ArrayList>();
+        //USER_CREDENTIALS=new ArrayList<>();
+        ArrayList temp=new ArrayList<>();
+        temp.add("");
+        all_json_users.add(temp);
+        //USER_CREDENTIALS.add("");
         //--------------------Bloque para bajar users de API
 
         //request_json(activityName);
@@ -156,14 +156,14 @@ public class UsersController {
                                 JSONObject user = response.getJSONObject(i);
                                 //lista donde sera guardada la info
                                 ArrayList<String> json_user = new ArrayList<String>();
-                                id = user.getString("id");
-                                name = user.getString("name");
-                                last_name = user.getString("last_name");
-                                email = user.getString("email");
-                                password = user.getString("password");
-                                profile_picture = user.getString("profile_picture");
-                                id_flights = user.getString("id_flights");
-                                record_kilometers = user.getString("record_kilometers");
+                                String id = user.getString("id");
+                                String name = user.getString("name");
+                                String last_name = user.getString("last_name");
+                                String email = user.getString("email");
+                                String password = user.getString("password");
+                                String profile_picture = user.getString("profile_picture");
+                                String id_flights = user.getString("id_flights");
+                                String record_kilometers = user.getString("record_kilometers");
 
 
                                 //Log.d("JSON_VAR:",profile_picture+"pruebaetc");
@@ -172,7 +172,7 @@ public class UsersController {
                                 json_user.add(name);
                                 json_user.add(last_name);
                                 json_user.add(email);
-                                json_user.add(password);
+                                json_user.add(reverse(password));
                                 json_user.add(profile_picture);
                                 json_user.add(id_flights);
                                 json_user.add(record_kilometers);
@@ -182,9 +182,9 @@ public class UsersController {
 
                                 all_json_users.add(json_user);
                                 //Actualizar todos los credenciales para el login
-                                USER_CREDENTIALS.add(json_user.get(0)+":"+json_user.get(3)+":"+reverse(json_user.get(4)));
+                                //USER_CREDENTIALS.add(json_user.get(0)+":"+json_user.get(3)+":"+json_user.get(4));
                                 //USER_Data.add(json_user.get(1)+":"+json_user.get(2)+":"+json_user.get(4)+":"+json_user.get(5)+":"+json_user.get(6));
-                                Log.d("USERS-JSON:",USER_CREDENTIALS.get(i));
+                                //Log.d("USERS-JSON:",USER_CREDENTIALS.get(i));
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -212,18 +212,16 @@ public class UsersController {
 
     }
 
-    public void putUser(Context contexto,String idSelected,String ptextName,String ptextLastName, String ptextViewEmail)
+    public void putUser(Context contexto, String idSelected, final String ptextName, final String ptextLastName, final String ptextViewEmail, final String ppassword)
     {
-        textName=ptextName;
-        textLastName=ptextLastName;
-        textViewEmail=ptextViewEmail;
+
 
 
         //---------Hacer PUT al API
         RequestQueue MyRequestQueue = Volley.newRequestQueue(contexto);
 
 
-        String url = URL_api+idSelected+".json";
+        String url = URL_api+"/"+idSelected;
         StringRequest MyStringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -238,9 +236,10 @@ public class UsersController {
         }) {
             protected Map<String, String> getParams() {
                 Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("name", textName); //Add the data you'd like to send to the server.
-                MyData.put("last_name", textLastName);
-                MyData.put("email", textViewEmail);
+                MyData.put("name", ptextName); //Add the data you'd like to send to the server.
+                MyData.put("last_name", ptextLastName);
+                MyData.put("email", ptextViewEmail);
+                MyData.put("password", reverse(ppassword));
 
                 return MyData;
             }
@@ -296,30 +295,30 @@ public class UsersController {
 
 
     public String getId() {
-        return id;
+        return idSession;
     }
 
     public String getName() {
-        return name;
+        return nameSession;
     }
 
     public String getLast_name() {
-        return last_name;
+        return last_nameSession;
     }
 
     public String getEmail() {
-        return email;
+        return emailSession;
     }
 
     public String getPassword() {
-        return password;
+        return passwordSession;
     }
 
     public String getProfile_picture() {
-        return profile_picture;
+        return profile_pictureSession;
     }
 
     public String getId_flights() {
-        return id_flights;
+        return id_flightsSession;
     }
 }

@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     {
         UsersController prueba=UsersController.getInstance();
 
-        prueba.putUser(this,"4","Gerald","Gaucho","ger@13.com");
+       // prueba.putUser(this,"4","Gerald","Gaucho","ger@13.com");
 
     }
     public void bajar(View v)
@@ -209,8 +209,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void mensaje(View v)
     {
         UsersController prueba2=UsersController.getInstance();
-    String temp=prueba2.impDatos();
-        Toast.makeText(this, temp, Toast.LENGTH_SHORT).show();
+    //String temp=prueba2.impDatos();
+       // Toast.makeText(this, temp, Toast.LENGTH_SHORT).show();
     }
 
     //Para crear nueva cuenta
@@ -449,20 +449,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-
-
-            for (int i=0; i<usersCtrl.getUserCredentials().size();i++) {
-                String[] pieces = usersCtrl.getUserCredentials().get(i).split(":");
-                Log.d("Contrasenna",pieces[2]);
-                if (pieces[1].equals(mEmail) && pieces[2].equals(mPassword) ) {
+            for (int i=1; i<=usersCtrl.getAll_json_users().size();i++) {
+                //String[] pieces = usersCtrl.getUserCredentials().get(i).split(":");
+               // Log.d("Contrasenna:id",pieces[2]+":"+pieces[0]);
+                if (usersCtrl.getAll_json_users().get(i).get(3).equals(mEmail) && usersCtrl.getAll_json_users().get(i).get(4).equals(mPassword) ) {
                     // Account exists, return true if the password matches.
                     login=true;
-                    idActiveUser=Integer.parseInt(pieces[0]);
-
-
-
-                    usersCtrl.setSessionUser(idActiveUser-1); //-1 porque all_json_users empieza en 0
-
+                    String idTemp=usersCtrl.getAll_json_users().get(i).get(0).toString();
+                    idActiveUser=Integer.parseInt(idTemp);
+                    usersCtrl.setSessionUser(idActiveUser); //-1 porque all_json_users empieza en 0
 
                     break;
                     //return true;
