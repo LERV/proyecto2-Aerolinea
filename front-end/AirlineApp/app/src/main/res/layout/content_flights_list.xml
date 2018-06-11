@@ -9,10 +9,12 @@
     tools:showIn="@layout/app_bar_flights_list">
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/txt_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No flights found !"
+        android:gravity="center_vertical|center"
+        android:text="No flights were found!"
+        android:textColor="#ffff"
         android:textSize="18sp"
         android:visibility="invisible" />
 
@@ -20,6 +22,8 @@
         android:id="@+id/gridView_listFlights"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:focusableInTouchMode="false"
         android:numColumns="1"
         android:background="#3a3a3a"
         android:stretchMode="columnWidth"

@@ -51,7 +51,7 @@ public class FlightsList extends AppCompatActivity
     ArrayList<String> array_flight_departure;
     ArrayList<String> array_flight_arrival;
 
-    ArrayList<ArrayList<String>> all_flights_list;
+    TextView empty_txtview;
 
 
     @Override
@@ -84,23 +84,9 @@ public class FlightsList extends AppCompatActivity
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
 
-        //----------------------------------------------------------------
-        //cargo all flights list del API
-        all_flights_list = new ArrayList<ArrayList<String>>();
-        //AQUI DECIR ALL FLIGHTS_LIST = LLAMAR API
-
-
-
-        //AQUI YA DEBERIA TENER LA LISTA DE LISTAS
         //--------------------------------------------------------------------
         //--------------------------------------------------------------------
-        array_prices = new ArrayList<String>();
-        array_origin_places = new ArrayList<String>();
-        array_destiny_places = new ArrayList<String>();
-        array_flight_departure = new ArrayList<String>();
-        array_flight_arrival = new ArrayList<String>();
 
-        seleccionaVuelos();
 
         /*array_prices.add("500");
         array_prices.add("250");
@@ -112,6 +98,11 @@ public class FlightsList extends AppCompatActivity
         array_flight_departure.add("21:30");
         array_flight_arrival.add("14:00");
         array_flight_arrival.add("23:00");*/
+        array_prices = new ArrayList<String>();
+        array_origin_places = new ArrayList<String>();
+        array_destiny_places = new ArrayList<String>();
+        array_flight_departure = new ArrayList<String>();
+        array_flight_arrival = new ArrayList<String>();
 
         gridView_flights = findViewById(R.id.gridView_listFlights);
         GridAdapter adapter = new GridAdapter(FlightsList.this,array_prices,array_origin_places,array_destiny_places,array_flight_departure,array_flight_arrival);
@@ -121,7 +112,7 @@ public class FlightsList extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(),DetalleFlight.class);
-                intent.putStringArrayListExtra("selected_flight",all_flights_list.get(i));
+                intent.putStringArrayListExtra("selected_flight",Search.all_flights_list.get(i));
                 startActivity(intent);
             }
         });
@@ -131,15 +122,20 @@ public class FlightsList extends AppCompatActivity
     }
 
     private void seleccionaVuelos() {
-        String origen = Search.info_selected_user.get(0);
-        String destino = Search.info_selected_user.get(1);
-
+        String origen = Search.info_selected_user.get(0).toLowerCase();
+        String destino = Search.info_selected_user.get(1).toLowerCase();
+        Log.d("mop","entra a selecciona vuelos");
         //recorro lista de listas
-        for(int i=0; i<all_flights_list.size(); i++){
+        for(int i=0; i<Search.all_flights_list.size(); i++){
             //agarro cada vuelo especifico
-            ArrayList<String> vueloEspecifico = all_flights_list.get(i);
+            ArrayList<String> vueloEspecifico = Search.all_flights_list.get(i);
             //pregunto si origen y destino es igual a lo que el usuario especifico
-            if(vueloEspecifico.get(2)==origen && vueloEspecifico.get(3)==destino){
+            Log.d("mop","origen user es"+origen);
+            Log.d("mop","destino user es"+destino);
+            Log.d("mop","origen api es"+vueloEspecifico.get(2).toLowerCase());
+            Log.d("mop","destino api es"+vueloEspecifico.get(3).toLowerCase());
+            if((vueloEspecifico.get(2).toLowerCase().compareTo(origen)==0) && (vueloEspecifico.get(3).toLowerCase().compareTo(destino))==0){
+                Log.d("mop","lista all dio positiva");
                 //si si cumple entonces lleno las listas que inflan el grid
                 array_origin_places.add(vueloEspecifico.get(2));
                 array_destiny_places.add(vueloEspecifico.get(3));
@@ -164,6 +160,21 @@ public class FlightsList extends AppCompatActivity
                     handleSignInResult(googleSignInResult);
                 }
             });
+        }
+
+        array_prices.clear();
+        array_origin_places.clear();
+        array_destiny_places.clear();
+        array_flight_departure.clear();
+        array_flight_arrival.clear();
+
+        if(Search.all_flights_list.isEmpty()==true){
+            Log.d("mop","lista all vacia");
+            empty_txtview = findViewById(R.id.txt_empty);
+            empty_txtview.setVisibility(View.VISIBLE);
+        }else{
+            Log.d("mop","lista all con cosas");
+            seleccionaVuelos();
         }
     }
 
