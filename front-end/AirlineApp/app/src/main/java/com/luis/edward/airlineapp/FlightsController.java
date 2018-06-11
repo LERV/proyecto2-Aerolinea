@@ -80,6 +80,7 @@ public class FlightsController {
     public void downloadDataFromAPi(File getCacheDir) // Pasar getCacheDir()
     {
         //--------------------Bloque para bajar users de API
+        Log.d("Bandera","LLega a la funcion de descargar");
 
         //request_json(activityName);
         //Instantiate the cache

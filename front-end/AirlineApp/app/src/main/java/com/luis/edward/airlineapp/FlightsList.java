@@ -89,10 +89,6 @@ public class FlightsList extends AppCompatActivity
         all_flights_list = new ArrayList<ArrayList<String>>();
         //AQUI DECIR ALL FLIGHTS_LIST = LLAMAR API
 
-        FlightsController prueba=FlightsController.getInstance().getInstance();
-        prueba.downloadDataFromAPi(getCacheDir());
-        SystemClock.sleep(3000);
-        all_flights_list = prueba.getAll_json_flights();
 
 
         //AQUI YA DEBERIA TENER LA LISTA DE LISTAS
