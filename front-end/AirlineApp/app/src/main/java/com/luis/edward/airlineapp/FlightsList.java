@@ -195,6 +195,16 @@ public class FlightsList extends AppCompatActivity
 
         }else{
             //goLoginScreen();
+            UsersController persona = UsersController.getInstance();
+            nameUser.setText(persona.getName());
+            emailUser.setText(persona.getEmail());
+            //para cargar la foto de la persona
+            if(persona.getProfile_picture()== "null"){
+                Log.d("perro","foto es null");
+                imageUser.setImageResource(R.drawable.plane_icon);
+            }else{
+                Glide.with(this).load(persona.getProfile_picture()).into(imageUser);
+            }
         }
     }
 
@@ -243,6 +253,7 @@ public class FlightsList extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            go_account();
 
         } else if (id == R.id.nav_share) {
             log_out();
@@ -276,5 +287,10 @@ public class FlightsList extends AppCompatActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    private void go_account() {
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
     }
 }

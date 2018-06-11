@@ -161,15 +161,26 @@ public class Search extends AppCompatActivity
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
-
             nameUser.setText(account.getDisplayName());
             emailUser.setText(account.getEmail());
             //para cargar la foto de la persona
             Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
 
-        }/*else{
-            goLoginScreen(); //Arreglar porque si inicia sin Goole me devuelve al login
-        }*/
+        }else{
+            //goLoginScreen(); //Arreglar porque si inicia sin Goole me devuelve al login
+            UsersController persona = UsersController.getInstance();
+            nameUser.setText(persona.getName());
+            emailUser.setText(persona.getEmail());
+            //para cargar la foto de la persona
+            if(persona.getProfile_picture()== "null"){
+                Log.d("perro","foto es null");
+                imageUser.setImageResource(R.drawable.plane_icon);
+            }else{
+                Glide.with(this).load(persona.getProfile_picture()).into(imageUser);
+            }
+
+
+        }
     }
 
     private void goLoginScreen() {
@@ -223,6 +234,7 @@ public class Search extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            go_account();
 
         } else if (id == R.id.nav_share) {
             log_out();
@@ -231,6 +243,11 @@ public class Search extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void go_account() {
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
     }
 
     @Override
@@ -246,6 +263,7 @@ public class Search extends AppCompatActivity
                     goLoginScreen();
                 }else{
                     Toast.makeText(Search.this,"Session could not be closed",Toast.LENGTH_SHORT).show();
+                    goLoginScreen();
                 }
             }
         });

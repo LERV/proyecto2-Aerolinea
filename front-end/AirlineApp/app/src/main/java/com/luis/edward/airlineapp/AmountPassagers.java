@@ -167,6 +167,16 @@ public class AmountPassagers extends AppCompatActivity
 
         }else{
             //goLoginScreen();
+            UsersController persona = UsersController.getInstance();
+            nameUser.setText(persona.getName());
+            emailUser.setText(persona.getEmail());
+            //para cargar la foto de la persona
+            if(persona.getProfile_picture()== "null"){
+                Log.d("perro","foto es null");
+                imageUser.setImageResource(R.drawable.plane_icon);
+            }else{
+                Glide.with(this).load(persona.getProfile_picture()).into(imageUser);
+            }
         }
     }
 
@@ -215,6 +225,7 @@ public class AmountPassagers extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            go_account();
 
         } else if (id == R.id.nav_share) {
             log_out();
@@ -264,6 +275,11 @@ public class AmountPassagers extends AppCompatActivity
         Search.info_selected_user.add(selected_clase);
 
         Intent intent = new Intent(this, FlightsList.class);
+        startActivity(intent);
+    }
+
+    private void go_account() {
+        Intent intent = new Intent(this, Profile.class);
         startActivity(intent);
     }
 }

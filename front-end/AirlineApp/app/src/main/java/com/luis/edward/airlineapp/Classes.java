@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -130,6 +131,11 @@ public class Classes extends AppCompatActivity
         }
     }
 
+    private void go_account() {
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
+    }
+
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
@@ -140,7 +146,17 @@ public class Classes extends AppCompatActivity
             Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
 
         }else{
-            goLoginScreen();
+            //goLoginScreen();
+            UsersController persona = UsersController.getInstance();
+            nameUser.setText(persona.getName());
+            emailUser.setText(persona.getEmail());
+            //para cargar la foto de la persona
+            if(persona.getProfile_picture()== "null"){
+                Log.d("perro","foto es null");
+                imageUser.setImageResource(R.drawable.plane_icon);
+            }else{
+                Glide.with(this).load(persona.getProfile_picture()).into(imageUser);
+            }
         }
     }
 
@@ -189,10 +205,10 @@ public class Classes extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            go_account();
 
         } else if (id == R.id.nav_share) {
             log_out();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -36,13 +36,13 @@ public class UsersController {
 
 
     //Variables para guardar usuario en sesion
-    String id;
-    String name;
-    String last_name;
-    String email;
-    String password;
-    String profile_picture;
-    String id_flights;
+    private String id;
+    private String name;
+    private String last_name;
+    private String email;
+    private String password;
+    private String profile_picture;
+    private String id_flights;
     String record_kilometers;
 
 
@@ -76,6 +76,7 @@ public class UsersController {
         }
         return instanceUsers;
     }
+
 
     public ArrayList<ArrayList> getAll_json_users() {
         return all_json_users;
@@ -294,4 +295,31 @@ public class UsersController {
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getProfile_picture() {
+        return profile_picture;
+    }
+
+    public String getId_flights() {
+        return id_flights;
+    }
 }
