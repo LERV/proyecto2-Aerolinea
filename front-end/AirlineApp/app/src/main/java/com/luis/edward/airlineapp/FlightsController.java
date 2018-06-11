@@ -40,7 +40,7 @@ public class FlightsController {
     private JsonArrayRequest jsonArrayRequest;
 
 
-    public String URL_api="https://vuela-tiquicia-airline.herokuapp.com/flights/";
+    public String URL_api="https://vuela-tiquicia-airline.herokuapp.com/flights";
 
 
     //Variable utilizada para el PUT
@@ -56,7 +56,6 @@ public class FlightsController {
 
     //Arrelgar y quitar
     static ArrayList<ArrayList <String>> all_json_flights = new ArrayList<ArrayList<String>>();
-    private static ArrayList<String> USER_CREDENTIALS=new ArrayList<>();
 
 
     public static FlightsController getInstance(){
@@ -70,11 +69,7 @@ public class FlightsController {
     {
         Log.i("Imp","Llammmo funcion");
         String temp="";
-        for (String i:USER_CREDENTIALS)
-        {
-            temp+=i;
-        }
-        return temp;
+       return "";
     }
 
     public ArrayList<ArrayList<String>> getAll_json_flights()
@@ -100,7 +95,7 @@ public class FlightsController {
         jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 //ip de la maquina, cel y compu deben estar en misma red
-                URL_api+"users.json",
+                URL_api+".json",
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -112,43 +107,48 @@ public class FlightsController {
                             // Loop through the array elements
                             for(int i=0;i<response.length();i++){
                                 // Get current json object
-                                JSONObject user = response.getJSONObject(i);
+                                JSONObject flight = response.getJSONObject(i);
                                 //lista donde sera guardada la info
-                                ArrayList<String> json_user = new ArrayList<String>();
-                                String id = user.getString("id");
-                                String name = user.getString("name");
-                                String last_name = user.getString("last_name");
-                                String password = user.getString("password");
-                                String email = user.getString("email");
-                                String profile_picture = user.getString("profile_picture");
-                                String id_flight = user.getString("id_flight");
+                                ArrayList<String> json_flight = new ArrayList<String>();
+                                String id = flight.getString("id");
+                                String id_flight = flight.getString("id_flight");
+                                String from = flight.getString("from");
+                                String to = flight.getString("to");
+                                String date = flight.getString("date");
+                                String duration_hours = flight.getString("duration_hours");
+                                String price = flight.getString("price");
+                                String airplane_model = flight.getString("airplane_model");
+                                String time_departure = flight.getString("time_departure");
+                                String time_arrival = flight.getString("time_arrival");
+                                String flight_distance = flight.getString("flight_distance");
+
+                                json_flight.add(id);
+                                json_flight.add(id_flight);
+                                json_flight.add(from);
+                                json_flight.add(to);
+                                json_flight.add(date);
+                                json_flight.add(duration_hours);
+                                json_flight.add(price);
+                                json_flight.add(airplane_model);
+                                json_flight.add(time_departure);
+                                json_flight.add(time_arrival);
+                                json_flight.add(flight_distance);
 
 
 
 
-                                json_user.add(id);
-                                json_user.add(name);
-                                json_user.add(last_name);
-                                json_user.add(password);
-                                json_user.add(email);
-                                json_user.add(profile_picture);
-                                json_user.add(id_flight);
-
-
-
-
-                                all_json_flights.add(json_user);
+                                all_json_flights.add(json_flight);
                                 //Actualizar todos los credenciales para el login
-                                USER_CREDENTIALS.add(json_user.get(3)+":"+json_user.get(4));
-                                //USER_Data.add(json_user.get(1)+":"+json_user.get(2)+":"+json_user.get(4)+":"+json_user.get(5)+":"+json_user.get(6));
-                                Log.d("USERS-JSON:",USER_CREDENTIALS.get(i));
+
+                                //flight_Data.add(json_flight.get(1)+":"+json_flight.get(2)+":"+json_flight.get(4)+":"+json_flight.get(5)+":"+json_flight.get(6));
+
                             }
                             /*//Actualizar todos los credenciales
                             int cont=0;
-                            for (ArrayList<ArrayList<>> userTemp :all_json_users)
+                            for (ArrayList<ArrayList<>> flightTemp :all_json_flights)
                             {
-                                USER_CREDENTIALS[cont]=userTemp.get(6)+":"+userTemp.get(7);
-                                Log.d("USERS-JSON:",USER_CREDENTIALS[cont]);
+                                flight_CREDENTIALS[cont]=flightTemp.get(6)+":"+flightTemp.get(7);
+                                Log.d("flightS-JSON:",flight_CREDENTIALS[cont]);
                                 cont++;
                             }*/
                         }catch (JSONException e){
@@ -162,7 +162,7 @@ public class FlightsController {
                     @Override
                     public void onErrorResponse(VolleyError error){
                         // Do something when error occurred
-                        Log.d("Error","No pudo entrar al API /users: "+error);
+                        Log.d("Error","No pudo entrar al API /flights: "+error);
                     }
                 }
 
@@ -175,7 +175,7 @@ public class FlightsController {
 
 
 
-//-------------------- FIN Bloque para bajar users de API
+//-------------------- FIN Bloque para bajar flights de API
 
     }
 
