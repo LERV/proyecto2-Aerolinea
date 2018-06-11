@@ -111,6 +111,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     GoogleSignInOptions gso;
     public static final int SIGN_IN_CODE = 10;
 
+    //Para conectarse al API
+    UsersController usersCtrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onStart();
 
         Log.d("Start","Llego al Start");
-        UsersController usersCtrl=UsersController.getInstance();
+        usersCtrl=UsersController.getInstance();
 
         usersCtrl.downloadDataFromAPi(getCacheDir());
 
@@ -447,8 +450,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
 
-            //Llama al API users para verificar la sesión
-            UsersController usersCtrl=UsersController.getInstance();
+
             for (int i=0; i<usersCtrl.getUserCredentials().size();i++) {
                 String[] pieces = usersCtrl.getUserCredentials().get(i).split(":");
                 Log.d("Contrasenna",pieces[2]);
@@ -459,7 +461,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
-                    usersCtrl.setSessionUser(idActiveUser);
+                    usersCtrl.setSessionUser(idActiveUser-1); //-1 porque all_json_users empieza en 0
 
 
                     break;

@@ -101,11 +101,15 @@ public class UsersController {
     public void setSessionUser(int idActiveUser)
     {
 
+        Log.d("SET","Va a hacer SET");
         id = all_json_users.get(idActiveUser).get(0).toString();
         name = all_json_users.get(idActiveUser).get(1).toString();
         last_name = all_json_users.get(idActiveUser).get(2).toString();
         email = all_json_users.get(idActiveUser).get(3).toString();
         password = all_json_users.get(idActiveUser).get(4).toString();
+        Log.d("Password",all_json_users.get(idActiveUser).get(4).toString());
+        Log.d("ProfilePicture",all_json_users.get(idActiveUser).get(5).toString());
+        //if all_json_users.get(idActiveUser).get(5).toString()
         profile_picture = all_json_users.get(idActiveUser).get(5).toString();
         id_flights = all_json_users.get(idActiveUser).get(6).toString();
         record_kilometers = all_json_users.get(idActiveUser).get(7).toString();
@@ -161,7 +165,7 @@ public class UsersController {
                                 record_kilometers = user.getString("record_kilometers");
 
 
-
+                                //Log.d("JSON_VAR:",profile_picture+"pruebaetc");
 
                                 json_user.add(id);
                                 json_user.add(name);
