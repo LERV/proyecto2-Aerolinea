@@ -40,7 +40,7 @@ public class UsersController {
     private JsonArrayRequest jsonArrayRequest;
 
 
-    public String URL_api="http://192.168.137.1:3000/users/";
+    public String URL_api="https://vuela-tiquicia-airline.herokuapp.com/users/";
 
 
     //Variable utilizada para el PUT

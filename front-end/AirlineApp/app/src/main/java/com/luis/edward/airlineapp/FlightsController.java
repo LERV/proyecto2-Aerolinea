@@ -40,7 +40,7 @@ public class FlightsController {
     private JsonArrayRequest jsonArrayRequest;
 
 
-    public String URL_api="http://192.168.137.1:3000/flights/";
+    public String URL_api="https://vuela-tiquicia-airline.herokuapp.com/flights/";
 
 
     //Variable utilizada para el PUT
@@ -55,7 +55,7 @@ public class FlightsController {
 
 
     //Arrelgar y quitar
-    static ArrayList<ArrayList> all_json_flights = new ArrayList<ArrayList>();
+    static ArrayList<ArrayList <String>> all_json_flights = new ArrayList<ArrayList<String>>();
     private static ArrayList<String> USER_CREDENTIALS=new ArrayList<>();
 
 
@@ -77,7 +77,7 @@ public class FlightsController {
         return temp;
     }
 
-    public ArrayList<ArrayList> getAll_json_flights()
+    public ArrayList<ArrayList<String>> getAll_json_flights()
     {
         return  all_json_flights;
     }
