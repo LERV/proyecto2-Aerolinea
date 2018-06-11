@@ -146,7 +146,6 @@ public class Search extends AppCompatActivity
                 }
             });
         }
-
         all_flights_list.clear();
         info_selected_user.clear();
         ////////////////////////////////////////////////////////

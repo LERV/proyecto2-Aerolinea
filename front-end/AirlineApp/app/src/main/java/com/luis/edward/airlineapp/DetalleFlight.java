@@ -86,8 +86,9 @@ public class DetalleFlight extends AppCompatActivity
         TextView dep_time = findViewById(R.id.tx_departure_time_confirmation);
         TextView arrival_time = findViewById(R.id.tx_arrival_time_confirmation);
         TextView duration = findViewById(R.id.tx_duration_confirmation);
-
+        TextView class_confirmation = findViewById(R.id.tx_class_confirmation);
         TextView plane = findViewById(R.id.tx_plane);
+        TextView price_single_person = findViewById(R.id.tx_price_single_person_confirmation);
         TextView price = findViewById(R.id.tx_total_price);
         TextView total_price = findViewById(R.id.tx_total_price);
 
@@ -98,7 +99,9 @@ public class DetalleFlight extends AppCompatActivity
         dep_time.setText(chosen_flight_info.get(8));
         arrival_time.setText(chosen_flight_info.get(9));
         duration.setText(chosen_flight_info.get(5));
+        class_confirmation.setText(Search.info_selected_user.get(5));
         plane.setText(chosen_flight_info.get(7));
+        price_single_person.setText(chosen_flight_info.get(6));
         price.setText(chosen_flight_info.get(6));
 
         int adults = Integer.parseInt(Search.info_selected_user.get(3));

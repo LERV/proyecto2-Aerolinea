@@ -54,7 +54,7 @@
     <string name="title_activity_maps">Map</string>
 
     <!-- Strings related to flights list -->
-    <string name="label_price">$500</string>
+    <string name="label_price">500</string>
     <string name="label_date_word">Date</string>
     <string name="label_date">10/7/2018</string>
     <string name="label_departure_time">Departure time</string>
