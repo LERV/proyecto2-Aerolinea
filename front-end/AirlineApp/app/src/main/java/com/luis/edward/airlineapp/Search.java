@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -64,6 +65,7 @@ public class Search extends AppCompatActivity
     private TextView destiny;
 
     static ArrayList<String> info_selected_user;
+    static ArrayList<ArrayList<String>> all_flights_list = new ArrayList<ArrayList<String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class Search extends AppCompatActivity
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        all_flights_list.clear();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +111,7 @@ public class Search extends AppCompatActivity
             }
         });
 
+        ////////////////////////////////////////////////////////
         //------------------------------------------------------
         ///////////////////Agarro datos de textss//////////////////////////////
 
@@ -141,6 +146,18 @@ public class Search extends AppCompatActivity
                 }
             });
         }
+
+        all_flights_list.clear();
+        info_selected_user.clear();
+        ////////////////////////////////////////////////////////
+        //cargo all flights list del API
+        //AQUI DECIR ALL FLIGHTS_LIST = LLAMAR API
+        FlightsController prueba=FlightsController.getInstance().getInstance();
+        prueba.downloadDataFromAPi(getCacheDir());
+        SystemClock.sleep(3000);
+        Log.d("Flights json",prueba.getAll_json_flights().toString());
+        all_flights_list = prueba.getAll_json_flights();
+        //AQUI YA DEBERIA TENER LA LISTA DE LISTAS
     }
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){

@@ -2,6 +2,7 @@ package com.luis.edward.airlineapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -132,6 +133,8 @@ public class AmountPassagers extends AppCompatActivity
         num_adults = "1";
         num_children = "0";
         selected_clase = "economy";
+
+
 
     }
 
