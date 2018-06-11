@@ -53,12 +53,11 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/button_map_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
-                    android:onClick="go_mapActivity"
                     android:text="@string/label_Map" />
 
 
@@ -87,12 +86,11 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/button_map_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
-                    android:onClick="go_mapActivity"
                     android:text="@string/label_Map" />
 
             </LinearLayout>

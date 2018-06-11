@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -61,11 +62,14 @@ public class Search extends AppCompatActivity
     String currentDateString;
 
     private EditText departure_edit;
-    private TextView origin;
-    private TextView destiny;
+    static TextView origin;
+    static TextView destiny;
 
     static ArrayList<String> info_selected_user;
     static ArrayList<ArrayList<String>> all_flights_list = new ArrayList<ArrayList<String>>();
+    Button map_from;
+    Button map_to;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,10 +157,32 @@ public class Search extends AppCompatActivity
         //AQUI DECIR ALL FLIGHTS_LIST = LLAMAR API
         FlightsController prueba=FlightsController.getInstance().getInstance();
         prueba.downloadDataFromAPi(getCacheDir());
-        SystemClock.sleep(3000);
         Log.d("Flights json",prueba.getAll_json_flights().toString());
         all_flights_list = prueba.getAll_json_flights();
         //AQUI YA DEBERIA TENER LA LISTA DE LISTAS
+
+        ///------------------------------------------------------
+
+        map_from = findViewById(R.id.button_map_from);
+        map_to = findViewById(R.id.button_map_to);
+
+        map_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("txt_view",1);
+                startActivity(intent);
+            }
+        });
+
+        map_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("txt_view",2);
+                startActivity(intent);
+            }
+        });
     }
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
@@ -287,10 +313,5 @@ public class Search extends AppCompatActivity
             Intent intent = new Intent(this, AmountPassagers.class);
             startActivity(intent);
         }
-    }
-
-    public void go_mapActivity(View view){
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
     }
 }
