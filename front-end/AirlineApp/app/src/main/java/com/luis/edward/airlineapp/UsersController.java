@@ -34,20 +34,31 @@ import java.util.Map;
 public class UsersController {
     private static UsersController instanceUsers;
 
+
+    //Variables para guardar usuario en sesion
+    String id;
+    String name;
+    String last_name;
+    String email;
+    String password;
+    String profile_picture;
+    String id_flights;
+    String record_kilometers;
+
+
+    //Variable para usar Volley para APIs
     private RequestQueue mRequestQueue;
     private Cache cache;
     private Network network;
     private JsonArrayRequest jsonArrayRequest;
 
 
-    public String URL_api="https://vuela-tiquicia-airline.herokuapp.com/users/";
+    public String URL_api="https://vuela-tiquicia-airline.herokuapp.com/users";
 
 
     //Variable utilizada para el PUT
     String textName;
     String textLastName;
-    String textViewNationality;
-    String textViewPhone;
     String textViewEmail;
     String textPassword;
 
@@ -55,8 +66,8 @@ public class UsersController {
 
 
     //Arrelgar y quitar
-    static ArrayList<ArrayList> all_json_users = new ArrayList<ArrayList>();
-    private static ArrayList<String> USER_CREDENTIALS=new ArrayList<>();
+    private ArrayList<ArrayList> all_json_users = new ArrayList<ArrayList>();
+    private ArrayList<String> USER_CREDENTIALS=new ArrayList<>();
 
 
     public static UsersController getInstance(){
@@ -64,6 +75,14 @@ public class UsersController {
             instanceUsers = new UsersController();
         }
         return instanceUsers;
+    }
+
+    public ArrayList<ArrayList> getAll_json_users() {
+        return all_json_users;
+    }
+
+    public ArrayList<String> getUserCredentials() {
+        return USER_CREDENTIALS;
     }
 
     public String impDatos()
@@ -75,6 +94,28 @@ public class UsersController {
             temp+=i;
         }
         return temp;
+    }
+
+
+
+    public void setSessionUser(int idActiveUser)
+    {
+
+        id = all_json_users.get(idActiveUser).get(0).toString();
+        name = all_json_users.get(idActiveUser).get(1).toString();
+        last_name = all_json_users.get(idActiveUser).get(2).toString();
+        email = all_json_users.get(idActiveUser).get(3).toString();
+        password = all_json_users.get(idActiveUser).get(4).toString();
+        profile_picture = all_json_users.get(idActiveUser).get(5).toString();
+        id_flights = all_json_users.get(idActiveUser).get(6).toString();
+        record_kilometers = all_json_users.get(idActiveUser).get(7).toString();
+
+    }
+
+    public static String reverse(String forward) {
+        StringBuilder builder = new StringBuilder(forward);
+        String reverse = builder.reverse().toString();
+        return reverse;
     }
 
     public void downloadDataFromAPi(File getCacheDir) // Pasar getCacheDir()
@@ -95,7 +136,7 @@ public class UsersController {
         jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 //ip de la maquina, cel y compu deben estar en misma red
-                URL_api+"users.json",
+                URL_api+".json",
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -110,13 +151,14 @@ public class UsersController {
                                 JSONObject user = response.getJSONObject(i);
                                 //lista donde sera guardada la info
                                 ArrayList<String> json_user = new ArrayList<String>();
-                                String id = user.getString("id");
-                                String name = user.getString("name");
-                                String last_name = user.getString("last_name");
-                                String password = user.getString("password");
-                                String email = user.getString("email");
-                                String profile_picture = user.getString("profile_picture");
-                                String id_flight = user.getString("id_flight");
+                                id = user.getString("id");
+                                name = user.getString("name");
+                                last_name = user.getString("last_name");
+                                email = user.getString("email");
+                                password = user.getString("password");
+                                profile_picture = user.getString("profile_picture");
+                                id_flights = user.getString("id_flights");
+                                record_kilometers = user.getString("record_kilometers");
 
 
 
@@ -124,28 +166,21 @@ public class UsersController {
                                 json_user.add(id);
                                 json_user.add(name);
                                 json_user.add(last_name);
-                                json_user.add(password);
                                 json_user.add(email);
+                                json_user.add(password);
                                 json_user.add(profile_picture);
-                                json_user.add(id_flight);
+                                json_user.add(id_flights);
+                                json_user.add(record_kilometers);
 
 
 
 
                                 all_json_users.add(json_user);
                                 //Actualizar todos los credenciales para el login
-                                USER_CREDENTIALS.add(json_user.get(3)+":"+json_user.get(4));
+                                USER_CREDENTIALS.add(json_user.get(0)+":"+json_user.get(3)+":"+reverse(json_user.get(4)));
                                 //USER_Data.add(json_user.get(1)+":"+json_user.get(2)+":"+json_user.get(4)+":"+json_user.get(5)+":"+json_user.get(6));
                                 Log.d("USERS-JSON:",USER_CREDENTIALS.get(i));
                             }
-                            /*//Actualizar todos los credenciales
-                            int cont=0;
-                            for (ArrayList<ArrayList<>> userTemp :all_json_users)
-                            {
-                                USER_CREDENTIALS[cont]=userTemp.get(6)+":"+userTemp.get(7);
-                                Log.d("USERS-JSON:",USER_CREDENTIALS[cont]);
-                                cont++;
-                            }*/
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
@@ -166,8 +201,6 @@ public class UsersController {
         SystemClock.sleep(3000);
         // Adding request to request queue
         mRequestQueue.add(jsonArrayRequest);
-
-
 
 
 //-------------------- FIN Bloque para bajar users de API

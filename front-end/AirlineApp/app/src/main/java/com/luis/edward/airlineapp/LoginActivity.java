@@ -53,6 +53,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.tasks.Task;
 
 import org.json.JSONArray;
@@ -169,6 +171,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d("Start","Llego al Start");
+        UsersController usersCtrl=UsersController.getInstance();
+
+        usersCtrl.downloadDataFromAPi(getCacheDir());
+
+        SystemClock.sleep(3000);
+
+
     }
 
 
@@ -421,7 +437,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
+            Boolean login=false;
+            int idActiveUser=0;  //Id del usuario que inicio sesion basado en lo campo del API
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
@@ -429,16 +446,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+
+            //Llama al API users para verificar la sesión
+            UsersController usersCtrl=UsersController.getInstance();
+            for (int i=0; i<usersCtrl.getUserCredentials().size();i++) {
+                String[] pieces = usersCtrl.getUserCredentials().get(i).split(":");
+                Log.d("Contrasenna",pieces[2]);
+                if (pieces[1].equals(mEmail) && pieces[2].equals(mPassword) ) {
                     // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                    login=true;
+                    idActiveUser=Integer.parseInt(pieces[0]);
+
+
+
+                    usersCtrl.setSessionUser(idActiveUser);
+
+
+                    break;
+                    //return true;
+
                 }
             }
 
             // TODO: register the new account here.
-            return true;
+            return login;
         }
 
         @Override
