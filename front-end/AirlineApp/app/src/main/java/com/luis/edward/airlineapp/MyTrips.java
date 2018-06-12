@@ -127,7 +127,9 @@ public class MyTrips extends AppCompatActivity
 
 
         vuelos_user =  new ArrayList<String>();
+        //vuelos_user = userData.getId_flights().split(":");
         //VUELOS USER = DATA. IDS
+        //userData.getId_flights()
         seleccionaVuelos();
 
         gridView_next_trips = findViewById(R.id.grid_next_trips);
