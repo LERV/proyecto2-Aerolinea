@@ -154,6 +154,12 @@ public class MyTrips extends AppCompatActivity
                     array_destiny_places_history.add(vueloEspecifico.get(3));
                     array_date_history.add(vueloEspecifico.get(4));
                     array_km_history.add(vueloEspecifico.get(10));
+
+
+                    array_origin_places_next.add(vueloEspecifico.get(2));
+                    array_destiny_places_next.add(vueloEspecifico.get(3));
+                    array_date_next.add(vueloEspecifico.get(4));
+                    array_km_next.add(vueloEspecifico.get(10));
                 }
             }
         }
@@ -304,7 +310,7 @@ public class MyTrips extends AppCompatActivity
     }
 
     private void goMainActivity() {
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, Search.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

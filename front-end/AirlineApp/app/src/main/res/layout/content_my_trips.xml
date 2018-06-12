@@ -20,7 +20,9 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
-            android:text="@string/next_trips" />
+            android:text="@string/next_trips"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <GridView
             android:id="@+id/grid_next_trips"
@@ -34,7 +36,9 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
-            android:text="@string/travel_history" />
+            android:text="@string/travel_history"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <GridView
             android:id="@+id/grid_history_trips"
