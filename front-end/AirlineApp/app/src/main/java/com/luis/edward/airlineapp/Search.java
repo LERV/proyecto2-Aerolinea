@@ -147,6 +147,7 @@ public class Search extends AppCompatActivity
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if(opr.isDone()){
             GoogleSignInResult result = opr.get();
+            Log.d("gato","Llega antes del handle");
             handleSignInResult(result);
         }else{
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
@@ -199,6 +200,8 @@ public class Search extends AppCompatActivity
         });
     }
     private void handleSignInResult(GoogleSignInResult result) {
+
+        Log.d("gato","Entrooooo");
         if(result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
             nameUser.setText(account.getDisplayName());
@@ -207,16 +210,19 @@ public class Search extends AppCompatActivity
             Glide.with(this).load(account.getPhotoUrl()).into(imageUser);
 
         }else{
+
+            Log.d("gato","Entro como user y mostrará datos");
             //goLoginScreen(); //Arreglar porque si inicia sin Goole me devuelve al login
-            UsersController persona = UsersController.getInstance();
-            nameUser.setText(persona.getName());
-            emailUser.setText(persona.getEmail());
+            //UsersController persona = UsersController.getInstance();
+
+            nameUser.setText(userData.getName());
+            emailUser.setText(userData.getEmail());
             //para cargar la foto de la persona
-            if(persona.getProfile_picture()== "null"){
+            if(userData.getProfile_picture()== "null"){
                 Log.d("perro","foto es null");
                 imageUser.setImageResource(R.drawable.plane_icon);
             }else{
-                Glide.with(this).load(persona.getProfile_picture()).into(imageUser);
+                Glide.with(this).load(userData.getProfile_picture()).into(imageUser);
             }
 
 
@@ -285,7 +291,7 @@ public class Search extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    
+
     private void go_my_trips() {
 
         Intent intent = new Intent(this, MyTrips.class);
