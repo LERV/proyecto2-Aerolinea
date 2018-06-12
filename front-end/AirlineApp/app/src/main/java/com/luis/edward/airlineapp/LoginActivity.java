@@ -437,11 +437,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPassword = password;
         }
 
+
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             Boolean login=false;
-            int idActiveUser=0;  //Id del usuario que inicio sesion basado en lo campo del API
+            String idActiveUser="";  //Id del usuario que inicio sesion basado en lo campo del API
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
@@ -449,15 +450,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (int i=1; i<=usersCtrl.getAll_json_users().size();i++) {
+            for (int i=0; i<usersCtrl.getAll_json_users().size();i++) {
                 //String[] pieces = usersCtrl.getUserCredentials().get(i).split(":");
                // Log.d("Contrasenna:id",pieces[2]+":"+pieces[0]);
+
                 if (usersCtrl.getAll_json_users().get(i).get(3).equals(mEmail) && usersCtrl.getAll_json_users().get(i).get(4).equals(mPassword) ) {
                     // Account exists, return true if the password matches.
                     login=true;
-                    String idTemp=usersCtrl.getAll_json_users().get(i).get(0).toString();
-                    idActiveUser=Integer.parseInt(idTemp);
-                    usersCtrl.setSessionUser(idActiveUser); //-1 porque all_json_users empieza en 0
+                    idActiveUser=usersCtrl.getAll_json_users().get(i).get(0).toString();
+
+                    usersCtrl.setSessionUser(idActiveUser); //
 
                     break;
                     //return true;

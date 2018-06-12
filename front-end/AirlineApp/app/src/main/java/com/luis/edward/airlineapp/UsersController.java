@@ -66,7 +66,7 @@ public class UsersController {
 
 
     //Arrelgar y quitar
-    private ArrayList<ArrayList> all_json_users;
+    private ArrayList<ArrayList> all_json_users = new ArrayList<ArrayList>();
     //private ArrayList<String> USER_CREDENTIALS;
 
 
@@ -85,27 +85,45 @@ public class UsersController {
 
 
 
+    private String searchPosfromJson(String pIdActiveUser)
+    {
+        String posfromJson="-1";
+        //nameSession = all_json_users.get(idActiveUser).get(0).toString();
+        for (int i=0; i<all_json_users.size();i++) {
+            //String[] pieces = usersCtrl.getUserCredentials().get(i).split(":");
+            // Log.d("Contrasenna:id",pieces[2]+":"+pieces[0]);
+            if (all_json_users.get(i).get(0).toString().equals(pIdActiveUser)) {
+                posfromJson=String.valueOf(i);
+                break;
+                //Devuelve la posicion donde esta el registo del User en session
+            }
+        }
+        return posfromJson;
+
+    }
 
 
-
-    public void setSessionUser(int idActiveUser)
+    public void setSessionUser(String pIdActiveUser)
     {
 
         //Hacer ciclo para arreglar que se cae cuando se hacer un PUT porque el all_jasn viene con lo dato en
         //direfente orden y entonces el idActive no calza
 
+        int idPositionReg;
+        idPositionReg=Integer.parseInt(searchPosfromJson(pIdActiveUser));
+
         Log.d("SET","Va a hacer SET");
-        idSession =  String.valueOf(idActiveUser);
-        nameSession = all_json_users.get(idActiveUser).get(1).toString();
-        last_nameSession = all_json_users.get(idActiveUser).get(2).toString();
-        emailSession = all_json_users.get(idActiveUser).get(3).toString();
-        passwordSession = all_json_users.get(idActiveUser).get(4).toString();
-        Log.d("Password",all_json_users.get(idActiveUser).get(4).toString());
-        Log.d("ProfilePicture",all_json_users.get(idActiveUser).get(5).toString());
-        //if all_json_users.get(idActiveUser).get(5).toString()
-        profile_pictureSession = all_json_users.get(idActiveUser).get(5).toString();
-        id_flightsSession = all_json_users.get(idActiveUser).get(6).toString();
-        record_kilometersSession = all_json_users.get(idActiveUser).get(7).toString();
+        idSession =  String.valueOf(pIdActiveUser);
+        nameSession = all_json_users.get(idPositionReg).get(1).toString();
+        last_nameSession = all_json_users.get(idPositionReg).get(2).toString();
+        emailSession = all_json_users.get(idPositionReg).get(3).toString();
+        passwordSession = all_json_users.get(idPositionReg).get(4).toString();
+        Log.d("Password",all_json_users.get(idPositionReg).get(4).toString());
+        Log.d("ProfilePicture",all_json_users.get(idPositionReg).get(5).toString());
+        //if all_json_users.get(idPositionReg).get(5).toString()
+        profile_pictureSession = all_json_users.get(idPositionReg).get(5).toString();
+        id_flightsSession = all_json_users.get(idPositionReg).get(6).toString();
+        record_kilometersSession = all_json_users.get(idPositionReg).get(7).toString();
 
     }
 
@@ -119,12 +137,9 @@ public class UsersController {
     {
 
         //Arrelgar y quitar
-        all_json_users = new ArrayList<ArrayList>();
+
         //USER_CREDENTIALS=new ArrayList<>();
-        ArrayList temp=new ArrayList<>();
-        temp.add("");
-        all_json_users.add(temp);
-        //USER_CREDENTIALS.add("");
+                //USER_CREDENTIALS.add("");
         //--------------------Bloque para bajar users de API
 
         //request_json(activityName);
@@ -172,7 +187,8 @@ public class UsersController {
                                 json_user.add(name);
                                 json_user.add(last_name);
                                 json_user.add(email);
-                                json_user.add(reverse(password));
+                                String tempPassword=reverse(password);
+                                json_user.add(tempPassword);
                                 json_user.add(profile_picture);
                                 json_user.add(id_flights);
                                 json_user.add(record_kilometers);
@@ -239,7 +255,9 @@ public class UsersController {
                 MyData.put("name", ptextName); //Add the data you'd like to send to the server.
                 MyData.put("last_name", ptextLastName);
                 MyData.put("email", ptextViewEmail);
-                MyData.put("password", reverse(ppassword));
+
+                Log.d("mouse",ppassword);
+                MyData.put("password",ppassword);
 
                 return MyData;
             }
@@ -294,7 +312,7 @@ public class UsersController {
     }
 
 
-    public String getId() {
+    public String getIdSession() {
         return idSession;
     }
 
@@ -311,6 +329,7 @@ public class UsersController {
     }
 
     public String getPassword() {
+
         return passwordSession;
     }
 

@@ -139,6 +139,8 @@ public class Search extends AppCompatActivity
         departure_edit.setText(currentDateString);
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -155,12 +157,11 @@ public class Search extends AppCompatActivity
             });
         }
         //Se descarga la informacion sobre los usuario nuevamente
+        Log.d("Rino","Va a descargar User del start");
         userData=UsersController.getInstance();
         userData.downloadDataFromAPi(getCacheDir());
-        Log.d("PAto","Lleggo hasta antes del temp");
-        int tempIdUser=Integer.parseInt(userData.getId());
-        Log.d("PAto2",userData.getId());
-        userData.setSessionUser(tempIdUser);
+        SystemClock.sleep(3000);
+        userData.setSessionUser(userData.getIdSession());
 
         all_flights_list.clear();
         info_selected_user.clear();
@@ -282,6 +283,12 @@ public class Search extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void go_my_trips()
+    {
+        Intent intent = new Intent(this, MyTrips.class);
+        startActivity(intent);
     }
 
     private void go_account() {

@@ -2,6 +2,7 @@ package com.luis.edward.airlineapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -57,7 +58,7 @@ public class Profile extends AppCompatActivity
         textEmail= findViewById(R.id.EditTextViewEmail);
         textPassword= findViewById(R.id.EditTextPassword);
 
-        Log.d("ID_llego",userData.getId());
+        Log.d("ID_llego",userData.getIdSession());
 
         textName.setText(userData.getName());
         textLastName.setText(userData.getLast_name());
@@ -74,8 +75,12 @@ public class Profile extends AppCompatActivity
     public void updateProfile(View view)
     {
 
-        userData.putUser(this,userData.getId(),textName.getText().toString(),textLastName.getText().toString(),textEmail.getText().toString(),textPassword.getText().toString());
+        userData = UsersController.getInstance();
+        userData.putUser(this,userData.getIdSession(),textName.getText().toString(),textLastName.getText().toString(),textEmail.getText().toString(),textPassword.getText().toString());
+        SystemClock.sleep(3000);
+
         Toast.makeText(this, "Your information has been updated", Toast.LENGTH_SHORT).show();
+
         Intent intent = new Intent(this, Search.class);
         startActivity(intent);
     }
