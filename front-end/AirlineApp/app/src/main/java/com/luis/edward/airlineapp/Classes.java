@@ -2,6 +2,7 @@ package com.luis.edward.airlineapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -44,6 +45,8 @@ public class Classes extends AppCompatActivity
     private TextView economy;
     private TextView business;
     private TextView premium;
+
+    UsersController userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,17 +120,43 @@ public class Classes extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-        if(opr.isDone()){
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        }else{
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                    handleSignInResult(googleSignInResult);
-                }
-            });
+        //Se descarga la informacion sobre los usuario nuevamente
+        userData = UsersController.getInstance();
+        if (userData.getUserSessionState())
+        {
+            Log.d("Rino", "Va a descargar User del start");
+            userData = UsersController.getInstance();
+            userData.downloadDataFromAPi(getCacheDir());
+            SystemClock.sleep(3000);
+            userData.setSessionUser(userData.getIdSession());
+
+            nameUser.setText(userData.getName());
+            emailUser.setText(userData.getEmail());
+            //para cargar la foto de la persona
+            if (userData.getProfile_picture() == "null") {
+                Log.d("perro", "foto es null");
+                imageUser.setImageResource(R.drawable.plane_icon);
+            }
+            else
+            {
+                Glide.with(this).load(userData.getProfile_picture()).into(imageUser);
+            }
+        }
+        else {
+
+            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+            if(opr.isDone()){
+                GoogleSignInResult result = opr.get();
+                Log.d("gato","Llega antes del handle");
+                handleSignInResult(result);
+            }else{
+                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                        handleSignInResult(googleSignInResult);
+                    }
+                });
+            }
         }
     }
 
@@ -199,10 +228,12 @@ public class Classes extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            goMainActivity();
         } else if (id == R.id.nav_gallery) {
+            go_map();
 
         } else if (id == R.id.nav_slideshow) {
+            go_my_trips();
 
         } else if (id == R.id.nav_manage) {
             go_account();
@@ -216,7 +247,23 @@ public class Classes extends AppCompatActivity
         return true;
     }
 
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    private void go_map() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+    private void go_my_trips() {
+
+        Intent intent = new Intent(this, MyTrips.class);
+        startActivity(intent);
+    }
+
     public void log_out(){
+        userData.setUserSessionState(false);
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {

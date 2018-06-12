@@ -297,8 +297,10 @@ public class Search extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            goMainActivity();
+
         } else if (id == R.id.nav_gallery) {
+            go_map();
 
         } else if (id == R.id.nav_slideshow) {
             go_my_trips();
@@ -314,7 +316,15 @@ public class Search extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    private void go_map() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
     private void go_my_trips() {
 
         Intent intent = new Intent(this, MyTrips.class);
@@ -332,6 +342,7 @@ public class Search extends AppCompatActivity
     }
 
     public void log_out(){
+        userData.setUserSessionState(false);
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {

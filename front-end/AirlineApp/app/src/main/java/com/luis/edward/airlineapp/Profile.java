@@ -198,6 +198,7 @@ public class Profile extends AppCompatActivity
     }
 
     public void log_out(){
+        userData.setUserSessionState(false);
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
@@ -239,17 +240,43 @@ public class Profile extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-        if(opr.isDone()){
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        }else{
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                    handleSignInResult(googleSignInResult);
-                }
-            });
+        //Se descarga la informacion sobre los usuario nuevamente
+        userData = UsersController.getInstance();
+        if (userData.getUserSessionState())
+        {
+            Log.d("Rino", "Va a descargar User del start");
+            userData = UsersController.getInstance();
+            userData.downloadDataFromAPi(getCacheDir());
+            SystemClock.sleep(3000);
+            userData.setSessionUser(userData.getIdSession());
+
+            nameUser.setText(userData.getName());
+            emailUser.setText(userData.getEmail());
+            //para cargar la foto de la persona
+            if (userData.getProfile_picture() == "null") {
+                Log.d("perro", "foto es null");
+                imageUser.setImageResource(R.drawable.plane_icon);
+            }
+            else
+            {
+                Glide.with(this).load(userData.getProfile_picture()).into(imageUser);
+            }
+        }
+        else {
+
+            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+            if(opr.isDone()){
+                GoogleSignInResult result = opr.get();
+                Log.d("gato","Llega antes del handle");
+                handleSignInResult(result);
+            }else{
+                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                        handleSignInResult(googleSignInResult);
+                    }
+                });
+            }
         }
     }
 

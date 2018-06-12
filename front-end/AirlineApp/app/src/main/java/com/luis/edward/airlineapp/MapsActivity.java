@@ -1,6 +1,13 @@
 package com.luis.edward.airlineapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +25,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+    LocationManager locationManager;
+    LocationListener locationListener;
+
     int which_txt_field;
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, locationListener);
+                }
+            }
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +78,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float zoomlevel = 3;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(costa_rica, zoomlevel));
 
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(10.0275321, -84.2224416);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("San Jose"));
-        LatLng los_angeles = new LatLng(34.0207305, -118.6919273);
-        mMap.addMarker(new MarkerOptions().position(los_angeles).title("Los Angeles"));
-        LatLng new_york = new LatLng(40.6976701, -74.2598722);
-        mMap.addMarker(new MarkerOptions().position(new_york).title("New York"));
-        LatLng dallas = new LatLng(32.8209296, -97.0117378);
-        mMap.addMarker(new MarkerOptions().position(dallas).title("Dallas"));
-        LatLng miami = new LatLng(25.7825453, -80.2994992);
-        mMap.addMarker(new MarkerOptions().position(miami).title("Miami"));
-        LatLng houston = new LatLng(29.8174782, -95.6814882);
-        mMap.addMarker(new MarkerOptions().position(houston).title("Houston"));
-        LatLng chicago = new LatLng(41.8339042, -88.0121545);
-        mMap.addMarker(new MarkerOptions().position(chicago).title("Chicago"));
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                //mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(currentLocation).title("You were here"));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
 
 
 
+                // Add a marker in Sydney and move the camera
+                LatLng sydney = new LatLng(10.0275321, -84.2224416);
+                mMap.addMarker(new MarkerOptions().position(sydney).title("San Jose"));
+                LatLng los_angeles = new LatLng(34.0207305, -118.6919273);
+                mMap.addMarker(new MarkerOptions().position(los_angeles).title("Los Angeles"));
+                LatLng new_york = new LatLng(40.6976701, -74.2598722);
+                mMap.addMarker(new MarkerOptions().position(new_york).title("New York"));
+                LatLng dallas = new LatLng(32.8209296, -97.0117378);
+                mMap.addMarker(new MarkerOptions().position(dallas).title("Dallas"));
+                LatLng miami = new LatLng(25.7825453, -80.2994992);
+                mMap.addMarker(new MarkerOptions().position(miami).title("Miami"));
+                LatLng houston = new LatLng(29.8174782, -95.6814882);
+                mMap.addMarker(new MarkerOptions().position(houston).title("Houston"));
+                LatLng chicago = new LatLng(41.8339042, -88.0121545);
+                mMap.addMarker(new MarkerOptions().position(chicago).title("Chicago"));
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.ACCESS_FINE_LOCATION }, 0);
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
+            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            mMap.clear();
+            LatLng location = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(location).title("You're here"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        }
         mMap.setOnInfoWindowClickListener(getInfoWindowClickListener());
     }
 
