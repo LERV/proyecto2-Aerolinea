@@ -158,6 +158,7 @@ public class Search extends AppCompatActivity
                 }
             });
         }
+
         //Se descarga la informacion sobre los usuario nuevamente
         Log.d("Rino","Va a descargar User del start");
         userData=UsersController.getInstance();
