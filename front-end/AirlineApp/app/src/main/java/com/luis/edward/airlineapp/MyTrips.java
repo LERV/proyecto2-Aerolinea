@@ -13,9 +13,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
+
+import java.util.ArrayList;
 
 public class MyTrips extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    GridView gridView_next_trips;
+    GridView gridView_history_trips;
+
+    ArrayList array_origin_places_next;
+    ArrayList array_destiny_places_next;
+    ArrayList array_date_next;
+    ArrayList array_km_next;
+
+    ArrayList array_origin_places_history;
+    ArrayList array_destiny_places_history;
+    ArrayList array_date_history;
+    ArrayList array_km_history;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +40,6 @@ public class MyTrips extends AppCompatActivity
         setContentView(R.layout.activity_my_trips);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,6 +49,44 @@ public class MyTrips extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //-----------------------------------------------------------------
+        //-----------------------------------------------------------------
+        array_origin_places_next = new ArrayList<String>();
+        array_destiny_places_next = new ArrayList<String>();
+        array_date_next = new ArrayList<String>();
+        array_km_next = new ArrayList<String>();
+
+        array_origin_places_next.add("Liberia");
+        array_origin_places_next.add("Texas");
+        array_destiny_places_next.add("The Angels");
+        array_destiny_places_next.add("New York");
+        array_date_next.add("15/6/2018");
+        array_date_next.add("20/6/2018");
+        array_km_next.add("4000");
+        array_km_next.add("2000");
+
+        array_origin_places_history = new ArrayList<String>();
+        array_destiny_places_history = new ArrayList<String>();
+        array_date_history = new ArrayList<String>();
+        array_km_history = new ArrayList<String>();
+
+        array_origin_places_history.add("Chicago");
+        array_origin_places_history.add("San Jose");
+        array_destiny_places_history.add("New York");
+        array_destiny_places_history.add("Miami");
+        array_date_history.add("10/6/2018");
+        array_date_history.add("2/3/2018");
+        array_km_history.add("6000");
+        array_km_history.add("3000");
+
+        gridView_next_trips = findViewById(R.id.grid_next_trips);
+        GridAdapter_Trips adapter1 = new GridAdapter_Trips(MyTrips.this,array_origin_places_next,array_destiny_places_next,array_date_next,array_km_next);
+        gridView_next_trips.setAdapter(adapter1);
+
+        gridView_history_trips = findViewById(R.id.grid_history_trips);
+        GridAdapter_Trips adapter2 = new GridAdapter_Trips(MyTrips.this,array_origin_places_history,array_destiny_places_history,array_date_history,array_km_history);
+        gridView_history_trips.setAdapter(adapter2);
     }
 
     @Override

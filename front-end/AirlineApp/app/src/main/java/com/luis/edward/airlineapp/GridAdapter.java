@@ -1,17 +1,12 @@
 package com.luis.edward.airlineapp;
 
 import android.content.Context;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -62,9 +57,9 @@ public class GridAdapter extends BaseAdapter {
         }
 
         TextView price = (TextView) gridView.findViewById(R.id.textView_price);
-        TextView place_from = (TextView) gridView.findViewById(R.id.textView_from);
+        TextView place_from = (TextView) gridView.findViewById(R.id.textView_from_trips);
         TextView place_to = (TextView) gridView.findViewById(R.id.textView_to);
-        TextView depart_hour = (TextView) gridView.findViewById(R.id.textView_hour_departure);
+        TextView depart_hour = (TextView) gridView.findViewById(R.id.textView_date_trips);
         TextView arrival_hour = (TextView) gridView.findViewById(R.id.textView_hour_arrival);
 
         price.setText(dollar_price.get(position).toString());

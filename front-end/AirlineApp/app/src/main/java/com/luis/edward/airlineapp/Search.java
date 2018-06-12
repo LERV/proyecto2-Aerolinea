@@ -272,6 +272,7 @@ public class Search extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
+            go_my_trips();
 
         } else if (id == R.id.nav_manage) {
             go_account();
@@ -284,9 +285,9 @@ public class Search extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    
+    private void go_my_trips() {
 
-    private void go_my_trips()
-    {
         Intent intent = new Intent(this, MyTrips.class);
         startActivity(intent);
     }

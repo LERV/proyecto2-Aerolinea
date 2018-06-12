@@ -85,6 +85,14 @@
     <string name="label_Book">Book</string>
     <string name="title_activity_profile">Profile</string>
 
+    <!-- Strings related to custom_my_trips -->
+    <string name="label_date_flight">Date</string>
+    <string name="next_trips">Next Trips</string>
+    <string name="travel_history">Travel History</string>
+    <string name="label_kilometers">Kilometers</string>
+    <string name="label_kilometers_num">9000</string>
+
+
 
 </resources>
 
