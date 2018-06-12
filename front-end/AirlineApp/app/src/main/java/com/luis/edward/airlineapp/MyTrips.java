@@ -50,6 +50,10 @@ public class MyTrips extends AppCompatActivity
     ArrayList array_date_history;
     ArrayList array_km_history;
 
+    ArrayList vuelos_user;
+
+
+
     private GoogleApiClient googleApiClient;
     private ImageView imageUser;
     private TextView nameUser;
@@ -98,28 +102,33 @@ public class MyTrips extends AppCompatActivity
         array_date_next = new ArrayList<String>();
         array_km_next = new ArrayList<String>();
 
-        array_origin_places_next.add("Liberia");
+/*        array_origin_places_next.add("Liberia");
         array_origin_places_next.add("Texas");
         array_destiny_places_next.add("The Angels");
         array_destiny_places_next.add("New York");
         array_date_next.add("15/6/2018");
         array_date_next.add("20/6/2018");
         array_km_next.add("4000");
-        array_km_next.add("2000");
+        array_km_next.add("2000");*/
 
         array_origin_places_history = new ArrayList<String>();
         array_destiny_places_history = new ArrayList<String>();
         array_date_history = new ArrayList<String>();
         array_km_history = new ArrayList<String>();
 
-        array_origin_places_history.add("Chicago");
+        /*array_origin_places_history.add("Chicago");
         array_origin_places_history.add("San Jose");
         array_destiny_places_history.add("New York");
         array_destiny_places_history.add("Miami");
         array_date_history.add("10/6/2018");
         array_date_history.add("2/3/2018");
         array_km_history.add("6000");
-        array_km_history.add("3000");
+        array_km_history.add("3000");*/
+
+
+        vuelos_user =  new ArrayList<String>();
+        //VUELOS USER = DATA. IDS
+        seleccionaVuelos();
 
         gridView_next_trips = findViewById(R.id.grid_next_trips);
         GridAdapter_Trips adapter1 = new GridAdapter_Trips(MyTrips.this,array_origin_places_next,array_destiny_places_next,array_date_next,array_km_next);
@@ -128,6 +137,20 @@ public class MyTrips extends AppCompatActivity
         gridView_history_trips = findViewById(R.id.grid_history_trips);
         GridAdapter_Trips adapter2 = new GridAdapter_Trips(MyTrips.this,array_origin_places_history,array_destiny_places_history,array_date_history,array_km_history);
         gridView_history_trips.setAdapter(adapter2);
+    }
+
+    private void seleccionaVuelos() {
+        for(int i=0; i<vuelos_user.size();i++){
+            for(int j=0; j<Search.all_flights_list.size();j++){
+                ArrayList vueloEspecifico = Search.all_flights_list.get(j);
+                if(vuelos_user.get(i) == vueloEspecifico.get(0)){
+                    array_origin_places_history.add(vueloEspecifico.get(2));
+                    array_destiny_places_history.add(vueloEspecifico.get(3));
+                    array_date_history.add(vueloEspecifico.get(4));
+                    array_km_history.add(vueloEspecifico.get(10));
+                }
+            }
+        }
     }
 
     @Override
