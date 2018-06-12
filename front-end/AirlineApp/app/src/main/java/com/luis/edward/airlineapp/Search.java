@@ -158,12 +158,13 @@ public class Search extends AppCompatActivity
                 }
             });
         }
+
         //Se descarga la informacion sobre los usuario nuevamente
-        Log.d("Rino","Va a descargar User del start");
+        /*Log.d("Rino","Va a descargar User del start");
         userData=UsersController.getInstance();
         userData.downloadDataFromAPi(getCacheDir());
         SystemClock.sleep(3000);
-        userData.setSessionUser(userData.getIdSession());
+        userData.setSessionUser(userData.getIdSession());*/
 
         all_flights_list.clear();
         info_selected_user.clear();
