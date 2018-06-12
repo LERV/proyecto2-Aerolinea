@@ -292,6 +292,10 @@ public class DetalleFlight extends AppCompatActivity
         Toast.makeText(this, "Vuelo reservado",
                 Toast.LENGTH_LONG).show();
 
+        chosen_flight_info.get(0); //Agregar al usuario esto
+
+        userData.putUserIdFlight(this,chosen_flight_info.get(0));
+
         Intent intent = new Intent(this, Search.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
