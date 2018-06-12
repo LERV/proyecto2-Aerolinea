@@ -145,6 +145,31 @@ public class Search extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         Log.d("gato","Llega al Start");
+
+        //Se descarga la informacion sobre los usuario nuevamente
+        userData = UsersController.getInstance();
+        if (userData.getUserSessionState())
+        {
+            Log.d("Rino", "Va a descargar User del start");
+            userData = UsersController.getInstance();
+            userData.downloadDataFromAPi(getCacheDir());
+            SystemClock.sleep(3000);
+            userData.setSessionUser(userData.getIdSession());
+
+            nameUser.setText(userData.getName());
+            emailUser.setText(userData.getEmail());
+            //para cargar la foto de la persona
+            if (userData.getProfile_picture() == "null") {
+                Log.d("perro", "foto es null");
+                imageUser.setImageResource(R.drawable.plane_icon);
+            }
+            else
+            {
+                Glide.with(this).load(userData.getProfile_picture()).into(imageUser);
+            }
+        }
+        else {
+
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if(opr.isDone()){
             GoogleSignInResult result = opr.get();
@@ -158,13 +183,9 @@ public class Search extends AppCompatActivity
                 }
             });
         }
+        }
 
-        //Se descarga la informacion sobre los usuario nuevamente
-        /*Log.d("Rino","Va a descargar User del start");
-        userData=UsersController.getInstance();
-        userData.downloadDataFromAPi(getCacheDir());
-        SystemClock.sleep(3000);
-        userData.setSessionUser(userData.getIdSession());*/
+
 
         all_flights_list.clear();
         info_selected_user.clear();
@@ -214,7 +235,7 @@ public class Search extends AppCompatActivity
         }else{
 
             Log.d("gato","Entro como user y mostrará datos");
-            //goLoginScreen(); //Arreglar porque si inicia sin Goole me devuelve al login
+           /* //goLoginScreen(); //Arreglar porque si inicia sin Goole me devuelve al login
             //UsersController persona = UsersController.getInstance();
 
             nameUser.setText(userData.getName());
@@ -226,7 +247,7 @@ public class Search extends AppCompatActivity
             }else{
                 Glide.with(this).load(userData.getProfile_picture()).into(imageUser);
             }
-
+                */
 
         }
     }

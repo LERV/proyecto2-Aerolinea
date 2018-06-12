@@ -461,6 +461,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     usersCtrl.setSessionUser(idActiveUser); //
 
+                    usersCtrl.setUserSessionState(true);
+
                     break;
                     //return true;
 

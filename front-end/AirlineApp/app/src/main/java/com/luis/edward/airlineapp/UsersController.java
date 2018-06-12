@@ -62,7 +62,7 @@ public class UsersController {
     String textViewEmail;
     String textPassword;
 
-
+    Boolean userSessionState=false;
 
 
     //Arrelgar y quitar
@@ -109,6 +109,8 @@ public class UsersController {
         //Hacer ciclo para arreglar que se cae cuando se hacer un PUT porque el all_jasn viene con lo dato en
         //direfente orden y entonces el idActive no calza
 
+        userSessionState=true;
+
         int idPositionReg;
         idPositionReg=Integer.parseInt(searchPosfromJson(pIdActiveUser));
 
@@ -136,6 +138,7 @@ public class UsersController {
     public void downloadDataFromAPi(File getCacheDir) // Pasar getCacheDir()
     {
 
+        userSessionState=true; //
         //Arrelgar y quitar
 
         //USER_CREDENTIALS=new ArrayList<>();
@@ -339,5 +342,13 @@ public class UsersController {
 
     public String getId_flights() {
         return id_flightsSession;
+
     }
+    public Boolean getUserSessionState() {
+        return userSessionState;
+    }
+    public void setUserSessionState(Boolean pUserSessionState) {
+        userSessionState=pUserSessionState;
+    }
+
 }
