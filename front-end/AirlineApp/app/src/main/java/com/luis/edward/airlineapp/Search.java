@@ -144,6 +144,7 @@ public class Search extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d("gato","Llega al Start");
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if(opr.isDone()){
             GoogleSignInResult result = opr.get();
