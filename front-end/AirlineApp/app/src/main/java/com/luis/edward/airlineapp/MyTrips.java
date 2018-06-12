@@ -125,9 +125,13 @@ public class MyTrips extends AppCompatActivity
         array_km_history.add("6000");
         array_km_history.add("3000");*/
 
-
+        userData=UsersController.getInstance();
         vuelos_user =  new ArrayList<String>();
-        //vuelos_user = userData.getId_flights().split(":");
+        String[] vuelos_userIDs = userData.getId_flights().split(":");
+        for (int i=0;i<vuelos_userIDs.length;i++)
+        {
+            vuelos_user.add(vuelos_userIDs[i]);
+        }
         //VUELOS USER = DATA. IDS
         //userData.getId_flights()
         seleccionaVuelos();
@@ -145,7 +149,7 @@ public class MyTrips extends AppCompatActivity
         for(int i=0; i<vuelos_user.size();i++){
             for(int j=0; j<Search.all_flights_list.size();j++){
                 ArrayList vueloEspecifico = Search.all_flights_list.get(j);
-                if(vuelos_user.get(i) == vueloEspecifico.get(0)){
+                if(vuelos_user.get(i).equals(vueloEspecifico.get(0))){
                     array_origin_places_history.add(vueloEspecifico.get(2));
                     array_destiny_places_history.add(vueloEspecifico.get(3));
                     array_date_history.add(vueloEspecifico.get(4));
