@@ -84,41 +84,22 @@ public class Profile extends AppCompatActivity
 
         //-----------------------------------------------------
         //--------------------------------------------------
-        userData = UsersController.getInstance();
-
-        //Log.d("Name USER",userSession.getNameUser().toString());
-
-
-        textName= findViewById(R.id.editTextName);
+        textName= findViewById(R.id.EditTextName);
         textLastName= findViewById(R.id.EditTextLastName);
         textEmail= findViewById(R.id.EditTextViewEmail);
         textPassword= findViewById(R.id.EditTextPassword);
-
-        Log.d("ID_llego",userData.getIdSession());
-
-        textName.setText(userData.getName());
-        textLastName.setText(userData.getLast_name());
-        //Log.d("Emai ES:",userSession.getEm);
-        textEmail.setText(userData.getEmail());
-        textPassword.setText(userData.getPassword());
-        String urlImageProfile=userData.getProfile_picture();
-
-        //Agregar foto de perfil a View image
-        ImageView image = findViewById(R.id.imageProfile);
-        Picasso.get().load(urlImageProfile).into(image);
     }
 
     public void updateProfile(View view)
     {
-
+        Toast.makeText(this, "Your information has been updated", Toast.LENGTH_SHORT).show();
         userData = UsersController.getInstance();
         userData.putUser(this,userData.getIdSession(),textName.getText().toString(),textLastName.getText().toString(),textEmail.getText().toString(),textPassword.getText().toString());
         SystemClock.sleep(3000);
 
-        Toast.makeText(this, "Your information has been updated", Toast.LENGTH_SHORT).show();
+        log_out();
 
-        Intent intent = new Intent(this, Search.class);
-        startActivity(intent);
+
     }
 
     @Override
@@ -192,24 +173,38 @@ public class Profile extends AppCompatActivity
     }
 
     private void goLoginScreen() {
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     public void log_out(){
-        userData.setUserSessionState(false);
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(@NonNull Status status) {
-                if(status.isSuccess()){
-                    goLoginScreen();
-                }else{
-                    Toast.makeText(Profile.this,"Session could not be closed",Toast.LENGTH_SHORT).show();
-                    goLoginScreen();
-                }
+
+        if (userData.getUserSessionState())
+        {
+            userData.setUserSessionState(false);
+            goLoginScreen();
+        }else
+            {
+                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        if(status.isSuccess()){
+                            goLoginScreen();
+                        }else{
+                            Toast.makeText(Profile.this,"Session could not be closed",Toast.LENGTH_SHORT).show();
+                            goLoginScreen();
+                        }
+                    }
+                });
+
             }
-        });
+
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -248,7 +243,16 @@ public class Profile extends AppCompatActivity
             userData = UsersController.getInstance();
             userData.downloadDataFromAPi(getCacheDir());
             SystemClock.sleep(3000);
+
+            try {
+                // Simulate network access.
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                int temp=0;
+            }
             userData.setSessionUser(userData.getIdSession());
+            Log.d("EMAIL:",userData.getEmail());
+
 
             nameUser.setText(userData.getName());
             emailUser.setText(userData.getEmail());
@@ -261,6 +265,23 @@ public class Profile extends AppCompatActivity
             {
                 Glide.with(this).load(userData.getProfile_picture()).into(imageUser);
             }
+
+            //MOstrar info del perfil
+
+
+            Log.d("ID_llego",userData.getIdSession());
+
+            textName.setText(userData.getName());
+            textLastName.setText(userData.getLast_name());
+            //Log.d("Emai ES:",userSession.getEm);
+            textEmail.setText(userData.getEmail());
+            textPassword.setText(userData.getPassword());
+            String urlImageProfile=userData.getProfile_picture();
+
+            //Agregar foto de perfil a View image
+            ImageView image = findViewById(R.id.imageProfile);
+            Picasso.get().load(urlImageProfile).into(image);
+
         }
         else {
 
