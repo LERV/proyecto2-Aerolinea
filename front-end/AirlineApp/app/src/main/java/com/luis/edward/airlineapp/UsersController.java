@@ -312,8 +312,14 @@ public class UsersController {
         }) {
             protected Map<String, String> getParams() {
                 Map<String, String> MyData = new HashMap<String, String>();
+                if (!id_flightsSession.equals("null")){
                 id_flightsSession=id_flightsSession+":"+pIdCFlight;
-                MyData.put("id_flights",id_flightsSession);
+                MyData.put("id_flights",id_flightsSession);}
+                else
+                    {
+                        id_flightsSession=pIdCFlight;
+                        MyData.put("id_flights",id_flightsSession);
+                    }
 
                 return MyData;
             }
